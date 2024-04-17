@@ -6,10 +6,16 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+$routes->group('Api', static function ($routes) {
+  $routes->resource('Ticket');
+});
+
 //get per defecte tickets
-$routes->match(['GET','POST'], '/ssttView', 'TicketsController::ssttView');
+$routes->get('tickets', 'TestController::index');
+
+$routes->match(['GET', 'POST'], '/ssttView', 'TicketsController::ssttView');
 //tickets
-$routes->match(['GET','POST'], '/viewTickets', 'TicketsController::viewTickets');
+$routes->match(['GET', 'POST'], '/viewTickets', 'TicketsController::viewTickets');
 
 // addTickets es pot borrar
 $routes->get('/addTickets', 'TicketsController::addTicket');
@@ -31,7 +37,7 @@ $routes->get('/interventionsOfTicket/(:segment)', 'TicketsInterventionsControlle
 $routes->get('/intervention/(:segment)/', 'InterventionsController::viewInterventions');
 
 //assignacio tickets
-$routes->match(['GET','POST'], '/assing', 'TicketsController::assingTicketsView');
+$routes->match(['GET', 'POST'], '/assing', 'TicketsController::assingTicketsView');
 $routes->get('/assingTicket/(:segment)', 'TicketsController::assingTicket/$1');
 $routes->post('/assingTicket/(:segment)', 'TicketsController::assingTicketPost/$1');
 // $routes->addRedirect('/', '/ssttView');
