@@ -1,7 +1,6 @@
 <?= $this->extend('layouts/mainLayout'); ?>
 <?= $this->section("main_content"); ?>
 <script>
-  import DataTable from 'datatables.net-dt';
   const dataSet = <?= json_encode($data) ?>;
   console.log(dataSet);
   const table = new DataTable('#tickets', {
