@@ -7,7 +7,7 @@
 </style>
 
 <?= $this->extend('layouts/mainLayout'); ?>
-<? // $this->extend('layouts/default/default'); ?>
+
 <?= $this->section("main_content"); ?>
 
 <div class="col-12 p-0">

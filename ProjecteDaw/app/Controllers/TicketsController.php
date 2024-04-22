@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CenterModel;
-use App\Models\ProfessorModel;
 use App\Models\StatusModel;
 use App\Models\TicketModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
@@ -29,9 +28,9 @@ class TicketsController extends BaseController
         $crud->setPrimaryKey('ticket_id');
         $crud->setRelation('device_type_id', 'devicetype', 'device_type_id', 'device_type');
         $crud->setRelation('g_center_code', 'centers', 'center_id', 'name');
-        $crud->setRelation('r_center_code', 'centers2', 'center_id', 'name');
+        //$crud->setRelation('r_center_code', 'centers2', 'center_id', 'name');
         $crud->setRelation('status_id', 'status', 'status_id', 'status');
-        $crud->setColumns(['ticket_id', 'devicetype__device_type', 'fault_description', 'centers__name', 'centers2__name', 'created_at', 'status__status']);
+        $crud->setColumns(['ticket_id', 'devicetype__device_type', 'fault_description', 'centers__name', /* 'centers2__name'*/ 'created_at', 'status__status']);
         $crud->setColumnsInfo([
             'ticket_id' => [
                 'name' => 'Identificador',
@@ -50,9 +49,9 @@ class TicketsController extends BaseController
             'centers__name' => [
                 'name' => 'Institut generador',
             ],
-            'centers2__name' => [
+            /*'centers2__name' => [
                 'name' => 'Institut reparador',
-            ],
+            ], */
             'name_person_center_g' => [
                 'name' => 'Nom generador',
             ],
@@ -103,11 +102,11 @@ class TicketsController extends BaseController
         $crud->setTable('tickets');
         $crud->setPrimaryKey('ticket_id');
         $crud->setRelation('status_id', 'status', 'status_id', 'status');
-        $crud->setRelation('device_type_id', 'devicetype', 'device_type_id', 'device_type');
+        $crud->setRelation('device_type_id', 'deviceType', 'device_type_id', 'device_type');
         $crud->setRelation('email_person_center_g', 'professors', 'email', 'email');
         //$crud->setRelation('name_person_center_g', 'professors2', 'name', 'name');
-        $crud->setColumns(['ticket_id', 'devicetype__device_type', 'status__status']);
-        // $crud->setColumns(['ticket_id', 'devicetype__device_type', 'registration_data', 'date_last_modification', 'status__status']);
+        $crud->setColumns(['ticket_id', 'deviceType__device_type', 'status__status']);
+        // $crud->setColumns(['ticket_id', 'deviceType__device_type', 'registration_data', 'date_last_modification', 'status__status']);
         $crud->setColumnsInfo([
             'ticket_id' => [
                 'name' => 'Identificador',
@@ -117,21 +116,11 @@ class TicketsController extends BaseController
                     'disabled'
                 ]
             ],
-            'devicetype__device_type' => [
+            'deviceType__device_type' => [
                 'name' => 'Tipus de dispositiu'
             ],
             'fault_description' => [
                 'name' => 'Descripció'
-            ],
-            'g_center_code' => [
-                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
-                'options' => array_combine($centerId, $centerId),
-                'html_atts' => ["required",],
-            ],
-            'r_center_code' => [
-                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
-                'options' => array_combine($centerId, $centerId),
-                'html_atts' => ["required",],
             ],
             'email_person_center_g' => [
                 'name' => 'Email generador',
@@ -168,7 +157,6 @@ class TicketsController extends BaseController
             'deleted_at' => [
                 'name' => 'Data esborrar',
                 // 'type' => KpaCrud::DATETIME_FIELD_TYPE,
-                'default' => date('Y-m-d h:m:s'),
                 'html_atts' => [
                     'disabled'
                 ]
@@ -199,6 +187,7 @@ class TicketsController extends BaseController
         ]);
         // preguntar
         $crud->addItemLink('view', 'fa-file', base_url('/interventionsOfTicket'), 'Mostrar intervencions');
+        $crud->addItemLink('del', 'fa-mail', base_url('/delTicket'), 'Eliminar intervenció');
         // $crud->setConfig(["editable" => false, "removable" => false]);
 
         $crud->setConfig('centerView');
@@ -213,11 +202,11 @@ class TicketsController extends BaseController
     public function addTicket()
     {
         $instanceDT = new DeviceTypeModel();
-        $instanceS = new StatusModel();
+        $instanceC = new CenterModel();
         $data = [
             'title' => lang('ticketsLang.titleG'),
-            'status' => $instanceS->getAllStatus(),
             'device' => $instanceDT->getAllDevices(),
+            'center' => $instanceC->getAllCentersId(),
         ];
         return view('Project/Tickets/createTickets', $data);
     }
@@ -228,29 +217,24 @@ class TicketsController extends BaseController
         $uuid = new UUID();
         //validation
         //data
-        $date = date('Y-m-d H:i:s');
+        // si ets SSTT el g_center_code es obligatori
+        // name email gCenter es sessio si ets professor 
+        $name = 'Alexander';
+        $email = 'testprofessor@me.local';
+        //if si es sessio o no
+        $gCenter = "8000013";
+        // cambiar per sessions amb el login 
         $data = [
             'ticket_id' => $uuid::v4(),
             'device_type_id' => $this->request->getPost('device'),
             'fault_description' => $this->request->getPost('description'),
-            'g_center_code' => '8000013',
+            'g_center_code' => $gCenter,
             'r_center_code' => null,
-            'email_person_center_g' => $this->request->getPost('email_person_contact'),
-            'name_person_center_g' => $this->request->getPost('person_contact_center'),
-            'status_id' => $this->request->getPost('status'),
+            'email_person_center_g' => $email,
+            'name_person_center_g' => $name,
+            // status estandard
+            'status_id' => '1',
         ];
-        // var_dump($data);
-        // die;
-        /* $ticketId = $uuid::v4();
-        $deviceType = $this->request->getPost('device');
-        $fault = $this->request->getPost('description');
-        $g_centerCode = '8.000.013';
-        $r_centerCode = null;
-        $email = $this->request->getPost('email_person_contact');
-        $person = $this->request->getPost('person_contact_center');
-        $dateAdd = getdate();
-        $dateMod = getdate();
-        $status = $this->request->getPost('status'); */
         $instanceT->insert($data);
     }
 
@@ -280,7 +264,6 @@ class TicketsController extends BaseController
         return view('Project/Tickets/assingTickets', $data);
     }
 
-
     //assignacio ticket
     public function assingTicket($id)
     {
@@ -291,7 +274,6 @@ class TicketsController extends BaseController
         return view('Project/Tickets/assingTicketsTrue', $data);
     }
 
-
     public function assingTicketPost($id)
     {
         $instanceT = new TicketModel();
@@ -300,5 +282,19 @@ class TicketsController extends BaseController
         ];
         $instanceT->assingTicket($id, $valueR);
         return redirect()->to(base_url('assing'));
+    }
+
+    //updateTicket
+    public function updateTicket()
+    {
+        return redirect()->to(base_url('assing'));
+    }
+
+    //deleteTicket
+    public function deleteTicket($ticket)
+    {
+        $instanceT = new TicketModel();
+        $instanceT->delete($ticket);
+        return redirect()->back()->withInput();
     }
 }
