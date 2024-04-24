@@ -10,8 +10,9 @@
     <title>Tickets</title>
 
 
-    <link href="dataTables/datatables.min.css" rel="stylesheet">
-    <script src="dataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="jquery/jquery.js"></script>
+    <link href="dataTables/datatables.css" rel="stylesheet">
+    <script src="dataTables/datatables.js"></script>
     <style>
         * {
             font-family: Verdana, Arial, Helvetica, sans-serif;
