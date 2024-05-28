@@ -184,7 +184,7 @@
                     </a>
                 </div>
                 
-                <?php if (session()->get('role') == 'Professor' || session()->get('role') == 'Center') :?>
+                <?php if (session()->get('role') == 'Professor' || session()->get('role') == 'Center' || session()->get('role') == 'Admin') :?>
                     <div class="menuButton mt-2 mb-3 ">
                         <a href="<?= base_url('/viewStock') ?>" class="py-2 ms-1 c-5 fs-5" style="text-decoration: none;">
                             <i class="fa-solid fa-boxes-stacked ms-4 me-2"></i>
@@ -198,7 +198,7 @@
                         </a>
                     </div>
                 <?php endif; ?>
-                <?php if (session()->get('role') == 'SSTT') :?>
+                <?php if (session()->get('role') == 'SSTT' || session()->get('role') == 'Admin') :?>
                     <div class="menuButton mt-2 mb-3">
                         <a href="" class="py-2 ms-1 c-5 fs-5" style="text-decoration: none;">
                             <i class="fa-solid fa-building-columns ms-4 me-2"></i>

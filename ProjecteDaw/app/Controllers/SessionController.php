@@ -53,7 +53,6 @@ class SessionController extends BaseController
             $password = $this->request->getPost('pass');
             if ($instance->userExists($email)) {
                 $user = $instance->getUserByMail($email);
-                $role = $instance->getRoleByEmail($email);
                 if (password_verify((string) $password, $user['password'])) {
                     //sstt
                     session()->set('mail', $email);
@@ -64,14 +63,10 @@ class SessionController extends BaseController
                     $mailType = substr($email, $pos);
 
 
-                    if ($email == "admin@gmail.com"){
+                    if ($email == "admin@hotmail.com"){
 
+                        session()->set('role', 'Admin');
                         
-                        $ssttModel = new SSTTModel();
-                        $ssttInfo = $ssttModel->getSSTTByEmail($email);
-                        session()->set('id', $ssttInfo['SSTT_id']);
-                        session()->set('lang', $ssttInfo['language']);
-
 
                     } else if ($mailType != '@gencat.cat') {
                         $studentsModel = new StudentModel();
