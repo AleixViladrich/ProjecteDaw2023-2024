@@ -58,17 +58,28 @@ class SessionController extends BaseController
                     //sstt
                     session()->set('mail', $email);
                     session()->set('role', $instance->getRoleByEmail($email));
-                    d(session()->get('role'));
+                    // d(session()->get('role'));
                     // session()->set('idSessionUser', 1);
                     $pos = strpos($email, '@');
                     $mailType = substr($email, $pos);
-                    if ($mailType != '@gencat.cat') {
+
+
+                    if ($email == "admin@gmail.com"){
+
+                        
+                        $ssttModel = new SSTTModel();
+                        $ssttInfo = $ssttModel->getSSTTByEmail($email);
+                        session()->set('id', $ssttInfo['SSTT_id']);
+                        session()->set('lang', $ssttInfo['language']);
+
+
+                    } else if ($mailType != '@gencat.cat') {
                         $studentsModel = new StudentModel();
                         $studentInfo = $studentsModel->obtainStByMail($email);
                         session()->set('id', $studentInfo['student_id']);
                         session()->set('idCenter', $studentInfo['student_center_id']);
                         session()->set('lang', $studentInfo['language']);
-                    } else {
+                    }else{
                         $ssttModel = new SSTTModel();
                         $ssttInfo = $ssttModel->getSSTTByEmail($email);
                         session()->set('id', $ssttInfo['SSTT_id']);
