@@ -15,7 +15,7 @@ echo $this->section("main_content");
 
             <?= csrf_field() ?>
 
-            <div class="row ">
+            <div class="row">
                 <div class="form-group col-6 my-4 ">
                     <label for="description" class=" bold fs-5"><?= lang('ticketsLang.description') ?></label>
                     <textarea class="form-control" name="description" id="description" cols="30" rows="3"></textarea>
@@ -34,7 +34,7 @@ echo $this->section("main_content");
                     </select>
                 </div>
                 <!--Començament de les variables-->
-                <?php if($role == 'SSTT'): ?>
+                <?php if(session()->get('role') == 'SSTT'): ?>
                 <div class="col-6 mt-4 mb-5">
                     <label for="center_g" class=" bold fs-5"><?= lang('ticketsLang.issuing_center') ?></label>
                     <select name="center_g" id="center_g">

@@ -74,4 +74,13 @@ class StockModel extends Model
         }
         return $assigned;
     }
+
+    //
+    public function checkStockOfCenterAvailable($idCenter) {
+        return $this->where("center_id", $idCenter)->where("intervention_id is null" )->findAll();
+    }
+
+    public function checkStockOfIntervention($idInter) {
+        return $this->where("intervention_id", $idInter)->first();
+    }
 }

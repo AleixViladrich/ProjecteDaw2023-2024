@@ -109,21 +109,20 @@ class TicketsController extends BaseController
         $crud->addItemLink('view', 'fa-solid fa-eye', base_url('/interventionsOfTicket'), 'Intervencions');
         $data['add'] = true;
         $role = session()->get('role');
-        if ($role == 'Admin' || $role == 'SSTT' || $role == 'Center') {
+        if ($role == 'Admin' || $role == 'SSTT' || $role == 'Center' || $role == 'Professor') {
+            $crud->addItemLink('update', 'fa-solid fa-pen', base_url('/updateTicket'), 'Modificar ticket');
             $crud->addItemLink('delTicket', 'fa fa-trash-o', base_url('/delTicket'), 'Eliminar ticket');
-            if ($role != 'Center') {
+            if ($role != 'Center' && $role != "Professor") {
                 $crud->addItemLink('assign', 'fa-solid fa-school', base_url('/assignTicket'), 'Assignar');
             }
         } else {
             if ($role == 'Student') {
-                $crud->setConfig(['editable' => false]);
                 $data['add'] = false;
-                $crud->addWhere("r_center_code", session()->idCenter);
             }
         }
-        
+
         if ($role == 'Student' || $role == 'Professor' || $role == 'Center') {
-            $crud->addWhere("r_center_code", session()->idCenter);
+            $crud->addWhere("r_center_code", session()->get('idCenter'));
         }
         // document.querySelector("#item-1 > td:nth-child(4) > a:nth-child(3)") meter text-danger y borrar text-primary
         $data['output'] = $crud->render();
@@ -222,7 +221,7 @@ class TicketsController extends BaseController
     public function assignTicket($id)
     {
         $instanceC = new CenterModel();
-        $centerId = $instanceC->getAllCentersId();
+        $centerId = $instanceC->getAllRepairingCenters();
         $data['id'] = $id;
         $data['centerId'] = $centerId;
         return view('Project/Tickets/assignTicketsTrue', $data);
@@ -239,15 +238,112 @@ class TicketsController extends BaseController
     }
 
     //updateTicket
-    public function updateTicket()
+    public function updateTicket($id)
     {
-        return redirect()->to(base_url('assign'));
+        $instanceT = new TicketModel();
+        $instanceS = new StatusModel();
+        $instanceD = new DeviceTypeModel();
+        $instanceI = new InterventionModel();
+        $statusChange = false;
+        //data
+        $ticket = $instanceT->retrieveSpecificData($id);
+        $status = $instanceS->getAllStatus();
+        $devices = $instanceD->getAllDevices();
+        //checks
+        if ($ticket['status_id'] == 3 || $ticket['status_id'] == 4) {
+            $statusChange = true;
+        }
+        $block = $instanceI->checkIfInterventionsBlock($id);
+        if ($ticket['status_id'] == 1) {
+            $selectStatus = $instanceS->getAllStatus();
+            $status[] = $selectStatus[1];
+            if ($block == true) {
+                $status[] = $selectStatus[2];
+            } else {
+                $status[] = $selectStatus[3];
+            }
+        } else {
+            $status = $instanceS->getAllStatus();
+        } 
+        // variable per filtrar status
+        $data = [
+            'ticket' => $ticket,
+            'device' => $devices,
+            'status' => $status,
+            'statusChange' => $statusChange,
+        ];
+        return view('Project/Tickets/updateTickets', $data);
+    }
+
+    //post
+    public function updateTicket_post($id)
+    {
+        if (session()->get('role') == "SSTT" || session()->get('role') == "Admin" ) {
+            $validationRules = [
+                'device' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
+                    ],
+                ],
+                'status' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
+                    ],
+                ],
+                'center_g' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
+                    ],
+                ],
+            ];
+        }
+        if (session()->get('role') == "Professor") {
+            $validationRules = [
+                'device' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
+                    ],
+                ],
+                'status' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
+                    ],
+                ],
+            ];
+        }
+        //validation
+        if ($this->validate($validationRules)) {
+            $instanceT = new TicketModel();
+            $status = $this->request->getPost("status");
+            $device = $this->request->getPost("device");
+            $data = [
+                'device_type_id' => $device,
+                'status_id' => $status,
+            ];
+            //sstt
+            if (session()->get('role') == "SSTT" || session()->get('role') == "Admin" ) {
+               $data["g_center_code"] = $this->request->getPost("center_g");
+            }
+            $instanceT->update($id, $data);
+            session()->setFlashdata('success', 'ticket actualitzat correctament');
+            return redirect()->back()->withInput();
+        } else {
+            session()->setFlashdata('error', 'dades insuficients');
+            return redirect()->back()->withInput();
+        }
+        return redirect()->back()->withInput();
     }
 
     //deleteTicket
     public function deleteTicket($ticket)
     {
         // fet i validat 
+        $instanceT = new TicketModel();
         $instanceI = new InterventionModel();
         $Interventions = $instanceI->getSpecificInterventions($ticket);
         if ($Interventions != null) {
@@ -257,7 +353,7 @@ class TicketsController extends BaseController
         $instanceT = new TicketModel();
         // dd($ticket);
         $instanceT->deleteTicket($ticket);
-        
+
         // dd($arr);
         // dd($interventionModel->getSpecificInterventions($ticket));
 

@@ -39,22 +39,11 @@ echo $this->section("main_content");
                 </div>
                 <div class="form-group col-6 my-4 ">
                     <label for="price" class=" bold fs-5">Preu (unitari)</label>
-                    <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price"></input>
+                    <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price" min="0" value="0"></input>
                 </div>
                 <div class="form-group col-6 my-4 ">
                     <label for="number_units" class=" bold fs-5">Numero de unitats</label>
-                    <input type="number" class="form-control" onkeydown="checkValidation(event)" name="number_units" id="number_units"></input>
-                </div>
-                <div class="col-6 mt-4 mb-5">
-                    <label for="center" class=" bold fs-5"><?= lang('ticketsLang.issuing_center') ?></label>
-                    <select name="center" id="center">
-                        <?php
-                        echo "<option value='' default hidden>Escull centre...</option>";
-                        foreach ($center as $value) {
-                            echo "<option value='" . $value['center_id'] . "'>" . $value['name'] . "</option>";
-                        }
-                        ?>
-                    </select>
+                    <input type="number" class="form-control" value="1" onkeydown="checkValidation(event)" name="number_units" id="number_units" min="1"></input>
                 </div>
                 <div>
                     <?= session()->getFlashdata('error') ?>
@@ -77,7 +66,6 @@ echo $this->section("main_content");
 
 
     function checkValidation(event) {
-        //const unitNumber = document.getElementById('number_units');
         var key = event.key;
         const unitNumber = event.target.value;
         if (isNaN(key) && key != 'Backspace') {
@@ -92,7 +80,6 @@ echo $this->section("main_content");
     }
 
     function checkValidationPrice(event) {
-        //const unitNumber = document.getElementById('number_units');
         var key = event.key;
         if (key == '-') {
             event.stopPropagation();

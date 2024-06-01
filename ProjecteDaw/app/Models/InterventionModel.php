@@ -74,6 +74,20 @@ class InterventionModel extends Model
         return $this->where('ticket_id', $id)->findAll();
     }
 
+    public function getSpecificIntervention($id)
+    {
+        return $this->where('intervention_id', $id)->first();
+    }
+
+    public function checkIfInterventionsBlock($id) {
+        $interventions = $this->where('ticket_id', $id)->findAll();
+        foreach ($interventions as $inter) {
+            if ($inter['intervention_type_id'] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
     public function deleteInterventionsByTicketId($id)
     {
         helper('date');

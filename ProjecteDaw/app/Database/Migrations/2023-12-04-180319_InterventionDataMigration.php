@@ -30,22 +30,22 @@ class InterventionDataMigration extends Migration
             'intervention_id'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '36',
-                null => false
+                'null' => false
             ],
             'ticket_id'          => [
                 'type'       => 'VARCHAR',
                 'constraint' => '36',
-                null => false
+                'null' => false
             ],
             'professor_id' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '36',
-                'null' => false,
+                'null' => true,
             ],
             'student_id' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '16',
-                'null' => false,
+                'constraint' => '36',
+                'null' => true,
             ],
             'intervention_type_id' => [
                 'type'       => 'INT',

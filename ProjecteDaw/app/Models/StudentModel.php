@@ -51,6 +51,10 @@ class StudentModel extends Model
         return $this->where("email", $email)->first();
     }
 
+    public function obtainStById($id) {
+        return $this->where("student_id", $id)->first();
+    }
+
     public function updateLang($lang){
         $data = [
             'language' => $lang
@@ -58,6 +62,31 @@ class StudentModel extends Model
 
         // return $this->update(session()->get('mail'), ['language'->$lang]);
         return $this->where('email', session()->get('mail'))->set($data)->update();
+    }
+
+    public function deleteStudent($id)
+    {
+        helper('date');
+        
+        // $data = [
+        //     'deleted_at' => 
+        // ];
+        $this->where('student_id', $id);
+        $this->set('deleted_at', date('Y-m-d H:i:s', now('GMT+2')));
+        $this->update();
+    }
+
+    public function updateSt($id, $data) {
+        $valid = false;
+        $users = $this->findAll();
+        foreach ($users as $value) {
+            if ($value['email'] == $data && $value['student_id'] != $id) {
+                return $valid;
+            }
+        }
+        $this->update($id, $data);
+        $valid = true;
+        return $valid;
     }
 
 }

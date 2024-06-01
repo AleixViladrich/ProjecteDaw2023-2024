@@ -47,15 +47,14 @@ class StatusModel extends Model
 
     public function getAllStatus()
     {
-        $status = $this->select('status')->findAll();
-
-        $dataStatus = [];
+        return $this->findAll();
+        /*$dataStatus = [];
 
         foreach ($status as $dataLoop) {
             $dataStatus[] = $dataLoop['status'];
         }
 
-        return $dataStatus;
+        return $dataStatus;*/
     }
 
     public function getStatus($id)

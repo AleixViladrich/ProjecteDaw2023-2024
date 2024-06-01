@@ -81,6 +81,7 @@ class TicketModel extends Model
             $this->update($id, $repairCenterId);
         }
     }
+    
     public function deleteTicket($id)
     {
         helper('date');

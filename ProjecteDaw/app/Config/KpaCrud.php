@@ -214,7 +214,7 @@ class KpaCrud extends \SIENSIS\KpaCrud\Config\KpaCrud
 
     public $ssttView = [
         'policy' => 'default',
-        'editable' => true,
+        'editable' => false,
         'removable' => false,
 
         'sortable' => true,

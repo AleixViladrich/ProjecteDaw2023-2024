@@ -4,6 +4,7 @@ namespace App\Database\Seeds;
 
 use App\Models\StudentModel;
 use CodeIgniter\Database\Seeder;
+use App\Libraries\UUID;
 
 class StudentSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class StudentSeeder extends Seeder
         $model = new StudentModel();
 
         $model->insert([
-            'student_id' => '679612ce-5c27-43',
+            'student_id' => UUID::v4(),
             'email' => "faixala@inscaparrella.cat",
-            'student_center_id' => "8000712",
+            'student_center_id' => "8000013",
             'language' => 'ca'
         ]);
     }

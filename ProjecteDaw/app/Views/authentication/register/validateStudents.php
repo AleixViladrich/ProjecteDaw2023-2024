@@ -4,10 +4,9 @@
     /* width:  100vw; */
   }
 </style>
-
 <?= $this->extend('layouts/mainLayout'); ?>
 <?= $this->section("main_content"); ?>
-<div class="row p-2 pb-0" style="">
+<div class="row p-2 pb-0">
   <div class="col-6">
     <?= $output ?>
   </div>

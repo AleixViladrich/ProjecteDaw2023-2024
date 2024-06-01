@@ -52,12 +52,11 @@ class SessionController extends BaseController
             $password = $this->request->getPost('pass');
             if ($instance->userExists($email)) {
                 $user = $instance->getUserByMail($email);
-                $role = $instance->getRoleByEmail($email);
                 if (password_verify((string)$password, $user['password'])) {
                     //sstt
                     session()->set('mail', $email);
                     session()->set('role', $instance->getRoleByEmail($email));
-                    d(session()->get('role'));
+                    //d(session()->get('role'));
                     // session()->set('idSessionUser', 1);
                     $pos = strpos($email, '@');
                     $mailType = substr($email, $pos);
@@ -141,6 +140,8 @@ class SessionController extends BaseController
                             $professorTrue = true;
                         } else {
                             $prof = $instanceProfessor->obtainProfessor($data['mail']);
+                            //revisar
+                            session()->set('id', $prof['professor_id']);
                             session()->set('idCenter', $prof['repair_center_id']);
                         }
                     }
@@ -160,6 +161,8 @@ class SessionController extends BaseController
                             'language' => 'ca'
                         ];
                         $instanceProfessor->insert($dataProf);
+                        //id Profe al crear sessio nou
+                        session()->set('id', $uuid);
                     }
                 } else {
                     $this->logOut_function();

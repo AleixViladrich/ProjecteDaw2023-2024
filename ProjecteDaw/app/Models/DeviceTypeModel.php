@@ -46,8 +46,7 @@ class DeviceTypeModel extends Model
 
     public function getAllDevices()
     {
-        $device = $this->select('device_type')->findAll();
-
+        $device = $this->findAll();
         $dataDevice = [];
 
         foreach ($device as $dataLoop) {

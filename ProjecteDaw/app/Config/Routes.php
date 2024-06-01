@@ -48,13 +48,16 @@ $routes->get('/intervention/(:segment)/', 'InterventionsController::viewInterven
 $routes->get('/assignTicket/(:segment)', 'TicketsController::assignTicket/$1');
 $routes->post('/assignTicket/(:segment)', 'TicketsController::assignTicketPost/$1');
 
+$routes->get('/updateTicket/(:segment)', 'TicketsController::updateTicket/$1');
+$routes->post('/updateTicket/(:segment)', 'TicketsController::updateTicket_post/$1');
+
 //crud Intervencions
 $routes->get('/addIntervention/(:segment)', 'InterventionsController::addIntervention/$1');
 $routes->get('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention/$1');
 $routes->get('/delIntervention/(:segment)', 'InterventionsController::delIntervention/$1');
 
 $routes->post('/addIntervention', 'InterventionsController::addIntervention_post');
-$routes->post('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention/$1');
+$routes->post('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention_post/$1');
 
 $route['default_controller'] = 'TicketsController::viewTickets';
 
@@ -68,6 +71,21 @@ $routes->get('/updateStock/(:segment)', 'StockController::updateStock/$1');
 $routes->post('/updateStock/(:segment)', 'StockController::updateStock_post/$1');
 //del
 $routes->get('/delStock/(:segment)', 'StockController::deleteStock/$1');
+
+//students
+$routes->MATCH(['GET','POST'], '/viewStudents', 'StudentsController::viewStudents');
+//add
+$routes->get('/addStudent', 'StudentsController::addStudent');
+$routes->post('/addStudent', 'StudentsController::addStudent_post');
+//update
+$routes->get('/updateStudent/(:segment)', 'StudentsController::updateStudent/$1');
+$routes->post('/updateStudent/(:segment)', 'StudentsController::updateStudent_post/$1');
+//del
+$routes->get('/delStudent/(:segment)', 'StudentsController::delStudent/$1');
+
+//basura
+$routes->get('/viewStudent', 'SessionController::validateStudents');
+$routes->post('/validateStudent', 'SessionController::validateStudents_post');
 
 $routes->get('/', 'SessionController::redirectToLogin');
 //AJAX

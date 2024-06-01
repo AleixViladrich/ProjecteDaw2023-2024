@@ -20,10 +20,10 @@ class TicketsInterventionsController extends BaseController
     public function viewIntermediary($id)
     {
         //calls
-        $modelTicket = new TicketModel();
+        $instanceT = new TicketModel();
         $status = new StatusModel();
         //functions
-        $ticket = $modelTicket->retrieveSpecificData($id);
+        $ticket = $instanceT->retrieveSpecificData($id);
         //kpaCrud
         $crud = new KpaCrud();
         $crud->setTable('interventions');
@@ -35,21 +35,31 @@ class TicketsInterventionsController extends BaseController
             'interventionType__intervention_type' => ['name' => 'Tipus intervenció'],
             'created_at' => ['name' => 'Data creació'],
         ]);
-        // $crud->setConfig('centerView');
+        $crud->setConfig('ssttView');  
         $crud->addWhere('ticket_id', $id);
-        $crud->setConfig('onlyView');
-        // $crud->addItemLink('del', 'fa-mail', base_url('/updateIntervention'), 'Modificar Intervencio');
-        // $crud->addItemLink('view', 'fa-file', base_url('/delIntervention'), 'Eliminar Intervencio');
-        // falta filtrar per intervencio
+        //obtenim ticket especific
+        $add = true;
+        if (session()->get('role') == "Student" || session()->get('role') == "Professor" || session()->get('role') == "Center") {
+            if ($ticket['status_id'] <= 2 ) {
+                $crud->addItemLink('view', 'fa-solid fa-pen', base_url('/updateIntervention'), 'Modificar Intervencio');
+                if ($ticket['status_id'] == 1) {
+                    $crud->addItemLink('del', 'fa fa-trash-o', base_url('/delIntervention'), 'Eliminar Intervencio');
+                }
+            } else {
+                $add = false;
+            }
+        }
+        // mostreem o no el boto de afegir
+        if (session()->get('role') == "SSTT") {
+            $add = false;
+        }
         $data = [
             'output' => $crud->render(),
             'title' => lang('ticketsLang.titleG'),
             'ticket' => $ticket,
-            'status' => $status->getStatus($ticket['status_id'])
+            'status' => $status->getStatus($ticket['status_id']),
+            'add' => $add,
         ];
-
-        // obtenim el el ticket en especific i les intervencions associades a aquells
-
         return view('Project/intermediaryTicInter/intermediary', $data);
     }
 }
