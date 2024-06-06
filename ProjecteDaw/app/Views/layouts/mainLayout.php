@@ -154,11 +154,11 @@
             <!-- <img src="<? base_url('Logo.png') ?>" alt="Logo" style="max-width: 60px"> -->
             <div class="mr-4" style="float: right; height: 100%; vertical-align: middle; display: flex; align-content: center; gap: 15px; align-items: center;">
             
-            <!--  TODO: fer ifs -->
+            <!--  TODO: fer ifs si  -->
             
+            <a class="m-0" style="text-decoration: none;<?php if(session()->get('lang') == 'ca') echo 'border: 5px solid white; border-radius: 35px;'; ?>" class="me-3" href="<?= base_url('changeLang/ca')?>"><img style="border-radius: 10px; width: 26px;"src="<?= base_url('images/catalunya.png') ?>" /></a>
+            <h3 class="me-2" style="color: white;" >|</h3>
             <a class="m-0" style="text-decoration: none;<?php if(session()->get('lang') == 'es') echo 'border:  5px solid white; border-radius: 35px;'; ?>" class="me-2"  href="<?= base_url('changeLang/es')?>"><img style="border-radius: 10px; width: 26px;"  src="<?= base_url('images/spain.png') ?>"  /></a>
-                <h3 class="me-2" style="color: white;" >|</h3>
-                <a class="m-0" style="text-decoration: none;<?php if(session()->get('lang') == 'ca') echo 'border: 5px solid white; border-radius: 35px;'; ?>" class="me-3" href="<?= base_url('changeLang/ca')?>"><img style="border-radius: 10px; width: 26px;"src="<?= base_url('images/catalunya.png') ?>" /></a>
                 
                 <h3 class="me-2" style="color: white;" >|</h3>
                 <a class="m-0" style="text-decoration: none;<?php if(session()->get('lang') == 'en') echo 'border: 5px solid white; border-radius: 25px;'; ?>" class="me-3" href="<?= base_url('changeLang/en')?>"><img style="border-radius: 15px; width: 26px;" class="m-0" src="<?= base_url('images/uk.png') ?>" /></a>

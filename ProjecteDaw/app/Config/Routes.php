@@ -19,6 +19,11 @@ $routes->get('/addTickets', 'TicketsController::addTicket');
 $routes->post('/addTickets', 'TicketsController::addTicketPost');
 
 
+// addStudent 
+$routes->get('/addStudent', 'SessionController::addStudent');
+$routes->post('/addStudent', 'SessionController::addStudentPost');
+
+
 //eliminar Tickets
 $routes->get('/delTicket/(:segment)', 'TicketsController::deleteTicket/$1');
 
@@ -30,6 +35,7 @@ $routes->get('/confirmDel/(:segment)', 'TicketsController::confirmDelete/$1');
 //Iniciar seesio SSTT
 // $routes->get('/loginAuth', 'SessionController::loginNormal');
 
+
 //iniciar sessio profe, alum
 $routes->get('/login', 'SessionController::google_login');
 $routes->post('/loginAuth', 'SessionController::login_post_Normal');
@@ -37,9 +43,13 @@ $routes->post('/loginAuth', 'SessionController::login_post_Normal');
 
 //validar el centre
 $routes->post('/validateCenter', 'SessionController::validateCenter');
+
+
 //register de alumnes
-$routes->get('/validateStudents', 'SessionController::validateStudents');
-$routes->post('/validateStudents', 'SessionController::validateStudents_post');
+    $routes->get('/validateStudents', 'SessionController::validateStudents');
+    $routes->post('/validateStudents', 'SessionController::validateStudents_post');
+
+
 
 //logOut
 $routes->get('/logout', 'SessionController::logout');

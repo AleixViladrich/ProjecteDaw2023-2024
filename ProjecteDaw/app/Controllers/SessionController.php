@@ -227,8 +227,10 @@ class SessionController extends BaseController
                 'name' => 'email',
             ],
         ]);
+        // TODO: Aqui preguntar si es sstt o profes o centres 
         $crud->setConfig('ssttView');
         $data['output'] = $crud->render();
+        $data['add'] = true;
         return view('authentication/register/validateStudents', $data);
     }
 
@@ -311,4 +313,57 @@ class SessionController extends BaseController
         return redirect()->to(previous_url());
 
     }
+    
+    public function addStudent()
+    {
+
+        $instanceC = new CenterModel();
+        $instanceP = new ProfessorModel();
+        $data = [
+            // 'title' => lang('ticketsLang.titleG'),
+        ];
+        //especific de cada vista
+
+        $role = session()->get('role');
+        $data['role'] = $role;
+       if ($role == 'Professor') {
+            
+
+            
+        }
+        return view('Project/Students/addStudent', $data);
+    }
+
+
+    public function addStudentPost()
+    {
+
+        $validationRules = [
+            'mail' => [
+                'label' => 'eMail usuari',
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => 'eMail es un camp obligatori',
+                    'valid_email' => 'No és un mail valid',
+                ],
+            ],
+        ];
+
+        if ($this->validate($validationRules)) {
+            $instanceSt = new StudentModel();
+            $data = [
+                'student_id' => UUID::v4(),
+                'email' => $this->request->getPost('mail'),
+                'student_center_id' => session()->idCenter,
+                'language' => 'ca'
+            ];
+            $instanceSt->insert($data);
+            return redirect()->to(base_url('validateStudents'));
+        } else {
+            session()->setFlashdata('error', 'Failed');
+            return redirect()->back()->withInput();
+        }
+    }
+
+
 }
