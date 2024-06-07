@@ -73,4 +73,9 @@ class LoginsModel extends Model
         }
         return false;
     }
+
+    public function getUserByEmail($email) {
+        $user = $this->where('email', $email)->first();
+        return ($user != null) ? 1 : 0;
+    }
 }

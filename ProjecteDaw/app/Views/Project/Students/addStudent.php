@@ -17,25 +17,29 @@ echo $this->section("main_content");
 
                 <?= csrf_field(); ?>
 
+
+
                 <div class="form-group my-4 ">
-                    <label for="mail" >Correu</label>
-                    <input class="form-control" type="text" placeholder="email.." id="mail">
+                    <label for="mail" class="mb-2">Correu</label>
+                    <input class="form-control" type="text" placeholder="email.." name="mail" id="mail">
                 </div>
 
                 <div class="form-group my-4 ">
-                    <label for="Password" class="mb-1">Constrasenya</label>
-                    <input class="form-control" type="password" placeholder="Password.." name="pass" id="pass">
+                    <label for="text" class="mb-2">Constrasenya</label>
+                    <input class="form-control" type="text" placeholder="Password.." name="pass" id="pass">
                 </div>
 
 
-                <div>
-                    <?=  session()->getFlashdata('error') ?>
+                <div class="m-2 text-center">
+                    <div classs="m-3 text-center" style="color:red">
+                        <?= session()->getFlashdata('error'); ?>
+                    </div>
                 </div>
 
 
                 <!--Començament de les variables-->
                 <?php if ($role == 'Professor') : ?>
-                    
+
                 <?php endif; ?>
 
                 <div class="col-12 bottom-center pe-0 ">
@@ -44,6 +48,7 @@ echo $this->section("main_content");
                 </div>
             </div>
         </form>
+
     </div>
 </div>
 <!-- <script>
@@ -53,8 +58,9 @@ echo $this->section("main_content");
             sortField: 'text'
         });
     });
-</script>
-<?php if (session()->get('role') == 'SSTT') : ?>
+</script> -->
+<!--<? //if (session()->get('role') == 'SSTT') : 
+    ?>
     <script>
         $(document).ready(function() {
             const selectGen = $('#center_g')[0].selectize;
@@ -84,5 +90,6 @@ echo $this->section("main_content");
             });
         });
     </script>
-<?php endif; ?> -->
+<? //endif; 
+?> -->
 <?php echo $this->endSection(); ?>

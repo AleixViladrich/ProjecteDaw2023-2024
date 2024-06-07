@@ -86,6 +86,14 @@ class ProfessorModel extends Model
     public function getProfessorsByCenterId ($id) {
         return $this->where('repair_center_id', $id)->findAll();
     }
+    
+    
+    public function getCenterIdByEmailProfessor ($email) {
+
+        $result =$this->where('email', $email)->first();
+
+        return $result['repair_center_id'];
+    }
 
     public function updateLang($lang){
 

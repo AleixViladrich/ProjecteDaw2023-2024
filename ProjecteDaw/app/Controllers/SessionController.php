@@ -11,6 +11,7 @@ use App\Models\LoginsModel;
 use App\Models\ProfessorModel;
 use App\Models\SSTTModel;
 use App\Models\StudentModel;
+use App\Models\UsersInRoleModel;
 
 // use Google\Service\Classroom\Student;
 
@@ -48,6 +49,7 @@ class SessionController extends BaseController
 
         if ($this->validate($validationRules)) {
             $instance = new LoginsModel();
+            $instanceProfessor = new ProfessorModel();
 
             $email = (string) $this->request->getPost('mail');
             $password = $this->request->getPost('pass');
@@ -63,11 +65,29 @@ class SessionController extends BaseController
                     $mailType = substr($email, $pos);
 
 
-                    if ($email == "admin@hotmail.com"){
+                    if ($email == "admin@gmail.com"){
 
                         session()->set('role', 'Admin');
                         
+                    }else if($email == "anilei@xtec.cat"){
+                            
+                        session()->set('role', 'Professor');
+                        
+                        $repair_center_id = $instanceProfessor->getCenterIdByEmailProfessor($email);
 
+                        $uuid = UUID::v4();
+                        $dataProf = [
+                            'professor_id' => $uuid,
+                            'email' => $email,
+                            'repair_center_id' => $repair_center_id,
+                            'language' => 'ca'
+                        ];
+
+                        $prof = $instanceProfessor->obtainProfessor($email);
+                        session()->set('idCenter', $prof['repair_center_id']);
+
+                        $instanceProfessor->insert($dataProf);
+                            
                     } else if ($mailType != '@gencat.cat') {
                         $studentsModel = new StudentModel();
                         $studentInfo = $studentsModel->obtainStByMail($email);
@@ -160,12 +180,13 @@ class SessionController extends BaseController
                         $pos = strpos($data['nomComplet'], ' ');
                         $surnames = substr($data['nomComplet'], $pos);
                         $uuid = UUID::v4();
+                        $repair_center_id = $instanceProfessor->getCenterIdByEmailProfessor($data['mail']);
                         $dataProf = [
                             'professor_id' => $uuid,
                             'name' => $data['nom'],
                             'surnames' => $surnames,
                             'email' => $data['mail'],
-                            'repair_center_id' => null,
+                            'repair_center_id' => $repair_center_id,
                             'language' => 'ca'
                         ];
                         $instanceProfessor->insert($dataProf);
@@ -338,6 +359,10 @@ class SessionController extends BaseController
     public function addStudentPost()
     {
 
+        $instanceSt = new StudentModel();
+        $instanceLogin = new LoginsModel();
+        $instanceUIR = new UsersInRoleModel();
+
         $validationRules = [
             'mail' => [
                 'label' => 'eMail usuari',
@@ -347,19 +372,59 @@ class SessionController extends BaseController
                     'valid_email' => 'No és un mail valid',
                 ],
             ],
+            'pass' => [
+                'label' => 'Contrasenya usuari',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'La clau és un camp obligatori',
+                ],
+            ],
         ];
 
-        if ($this->validate($validationRules)) {
-            $instanceSt = new StudentModel();
+        $emailBool = $instanceSt->getUserByEmail($this->request->getPost('mail'));
+        if(1 > $emailBool ){
+            $emailBoolLogin = $instanceLogin->getUserByEmail($this->request->getPost('mail'));
+
+            if(1 > $emailBoolLogin ){
+                $emailBoolUIR = $instanceUIR->getUserByEmail($this->request->getPost('mail'));
+            }
+        }
+
+        // TODO: validar si un correu esta
+
+        // d($this->request->getPost('pass'));
+        // dd($this->validate($validationRules));
+
+        $password = $this->request->getPost('pass');
+
+
+        if ($this->validate($validationRules) && is_string($password) && $emailBool == 0 && $emailBoolUIR == 0 && $emailBoolLogin == 0 ) {
+            
             $data = [
                 'student_id' => UUID::v4(),
                 'email' => $this->request->getPost('mail'),
                 'student_center_id' => session()->idCenter,
                 'language' => 'ca'
             ];
+
+            $dataLogin = [
+                'email' => $this->request->getPost('mail'),
+                'password'  => password_hash($password, PASSWORD_DEFAULT)
+            ];
+            
+            $dataUIR = [
+                'email' => $this->request->getPost('mail'),
+                'idRole'  => 5
+            ];
+
+
             $instanceSt->insert($data);
+            $instanceLogin->insert($dataLogin);
+            $instanceUIR->insert($dataUIR);
+
             return redirect()->to(base_url('validateStudents'));
         } else {
+            
             session()->setFlashdata('error', 'Failed');
             return redirect()->back()->withInput();
         }

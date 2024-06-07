@@ -41,4 +41,10 @@ class UsersInRoleModel extends Model
     public function getRoleByEmail($email) {
         return $this->where('email', $email)->first();
     }
+    
+    public function getUserByEmail($email) {
+        $user = $this->where('email', $email)->first();
+        return ($user != null) ? 1 : 0;
+    }
+
 }

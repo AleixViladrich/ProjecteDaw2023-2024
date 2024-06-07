@@ -60,4 +60,9 @@ class StudentModel extends Model
         return $this->where('email', session()->get('mail'))->set($data)->update();
     }
 
+    public function getUserByEmail($email) {
+        $user = $this->where('email', $email)->first();
+        return ($user != null) ? 1 : 0;
+    }
+
 }
