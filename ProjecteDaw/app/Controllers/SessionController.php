@@ -382,13 +382,12 @@ class SessionController extends BaseController
         ];
 
         $emailBool = $instanceSt->getUserByEmail($this->request->getPost('mail'));
-        if(1 > $emailBool ){
-            $emailBoolLogin = $instanceLogin->getUserByEmail($this->request->getPost('mail'));
+        $emailBoolLogin = $instanceLogin->getUserByEmail($this->request->getPost('mail'));
+        $emailBoolUIR = $instanceUIR->getUserByEmail($this->request->getPost('mail'));
 
-            if(1 > $emailBoolLogin ){
-                $emailBoolUIR = $instanceUIR->getUserByEmail($this->request->getPost('mail'));
-            }
-        }
+
+
+        
 
         // TODO: validar si un correu esta
 

@@ -12,13 +12,28 @@ class StatusSeeder extends Seeder
         $model = new StatusModel();
 
         $model->insert([
-            'status' => 'Pendent'
+            'status' => 'Pendent de recollir'
         ]);
         $model->insert([
-            'status' => 'En process'
+            'status' => 'Magatzem SSTT'
         ]);
         $model->insert([
-            'status' => 'Acabat'
+            'status' => 'Al centre reparador'
+        ]);
+        $model->insert([
+            'status' => 'En reparació'
+        ]);
+        $model->insert([
+            'status' => 'Reparat i pendent de recollir'
+        ]);
+        $model->insert([
+            'status' => 'Recollit'
+        ]);
+        $model->insert([
+            'status' => 'Entregat i finalitzat'
+        ]);
+        $model->insert([
+            'status' => 'Desguassat i finalitzat'
         ]);
     }
 }
