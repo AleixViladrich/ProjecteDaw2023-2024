@@ -42,7 +42,7 @@ class LoginsMigration extends Migration
         $this->forge->addField([
             'email' => [
                 'type' => 'VARCHAR',
-                'constraint' => '64',
+                'constraint' => '32',
             ],
             'idRole' => [
                 'type' => 'INT',
@@ -50,15 +50,15 @@ class LoginsMigration extends Migration
             ],
         ]);
         $this->forge->addPrimaryKey(['email', 'idRole']);
-        $this->forge->addForeignKey('email', 'logins', 'email');
-        $this->forge->addForeignKey('idRole', 'roles', 'idRole');
+        $this->forge->addForeignKey('email', 'logins', 'email', 'CASCADE', 'CASCADE'); 
+        $this->forge->addForeignKey('idRole', 'roles', 'idRole', 'CASCADE', 'CASCADE'); 
         $this->forge->createTable('usersinrole');
     }
 
     public function down()
     {
-        $this->forge->dropTable('idRole');
-        $this->forge->dropTable('logins');
-        $this->forge->dropTable('usersinrole');
+        $this->forge->dropTable('usersinrole', true);
+        $this->forge->dropTable('logins', true);
+        $this->forge->dropTable('roles', true);
     }
 }

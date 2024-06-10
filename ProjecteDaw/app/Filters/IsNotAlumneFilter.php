@@ -18,10 +18,10 @@ class IsNotAlumneFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (!isset(session()->mail) || !isset(session()->idCenter)) {
+        if (!isset(session()->mail)) {
             return redirect()->back()->withInput();
         } else {
-            if (isset(session()->role) == true && session()->role != "Student") {
+            if (!session()->has('role') || session()->get('role') == 'Student') {
                 return redirect()->back()->withInput();
             }
         }

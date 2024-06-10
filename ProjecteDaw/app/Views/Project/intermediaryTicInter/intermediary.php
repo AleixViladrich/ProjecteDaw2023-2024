@@ -111,6 +111,14 @@
                 </div>
             <?php endif ?> -->
             <?= $output ?>
+            <div class="m-1">
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                <?php endif; ?>
+                <?php if (session()->getFlashdata('success')) : ?>
+                    <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 

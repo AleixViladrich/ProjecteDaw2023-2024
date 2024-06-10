@@ -12,10 +12,10 @@ class StudentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["student_id","email","student_center_id","language"];
+    protected $allowedFields    = ["student_id","email","student_center_id","language",'deleted_at'];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -60,4 +60,37 @@ class StudentModel extends Model
         return $this->where('email', session()->get('mail'))->set($data)->update();
     }
 
+<<<<<<< Updated upstream
+=======
+    
+
+    public function updateSt($id, $mail) {
+        $valid = false;
+        $users = $this->findAll();
+        foreach ($users as $value) {
+            if ($value['email'] == $mail && $value['student_id'] != $id) {
+                return $valid;
+            }
+        }
+        $data = [
+            'email' => $mail,
+        ];
+        $this->update($id, $data);
+        $valid = true;
+        return $valid;
+    }
+    
+    public function deleteStudent($data)
+    {
+        helper('date');
+        // $data = [
+        //     'deleted_at' => 
+        // ];
+        $this->where('student_id', $data['student_id'])->set('deleted_at', date('Y-m-d H:i:s', now('GMT+2')))->update();
+        $instanceL = new LoginsModel();
+        $instanceUIR = new UsersInRoleModel();
+        $instanceUIR->where('email', $data['email'])->delete();
+        $instanceL->where('email', $data['email'])->delete();
+    }
+>>>>>>> Stashed changes
 }

@@ -44,7 +44,18 @@ class LoginsSeeder extends Seeder
         $isntanceL->insert($dataUsers);
         $dataInRole = [
             'email' => $dataUsers['email'],
-            'idRole' => 1
+            'idRole' => 1,
+        ];
+        $instanceUR->insert($dataInRole);
+        //prof
+        $dataUsers = [
+            'email' => 'faixala@inscaparrella.cat',
+            'password' => password_hash('123456', PASSWORD_DEFAULT),
+        ];
+        $isntanceL->insert($dataUsers);
+        $dataInRole = [
+            'email' => $dataUsers['email'],
+            'idRole' => 5
         ];
         $instanceUR->insert($dataInRole);
     }

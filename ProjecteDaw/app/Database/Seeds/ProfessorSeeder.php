@@ -16,7 +16,7 @@ class ProfessorSeeder extends Seeder
             'name' => 'Alexander',
             'surnames' => 'Nilei Vostob',
             'email'  => 'anilei@xtec.cat',
-            'repair_center_id' => '8000712',
+            'repair_center_id' => '8000013',
             'language' => 'ca'
         ]);
     }

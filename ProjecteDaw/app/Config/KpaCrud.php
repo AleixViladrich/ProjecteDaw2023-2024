@@ -234,7 +234,7 @@ class KpaCrud extends \SIENSIS\KpaCrud\Config\KpaCrud
         'multidelete' =>  false,
         'deletepermanent' =>   false,
 
-        'useSoftDeletes' =>   false,
+        'useSoftDeletes' =>   true,
 
         'showTimestamps' =>   false,
         'useTimestamps' =>   false,

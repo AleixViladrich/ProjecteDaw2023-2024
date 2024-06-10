@@ -6,11 +6,18 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class IsSSTTFilter implements FilterInterface
+class OnlyProfSSTTFilter implements FilterInterface
 {
     /**
-     * Comprova que sols quan ets SSTT iestas logat pots accedir
-     * 
+     * Do whatever processing this filter needs to do.
+     * By default it should not return anything during
+     * normal execution. However, when an abnormal state
+     * is found, it should return an instance of
+     * CodeIgniter\HTTP\Response. If it does, script
+     * execution will end and that Response will be
+     * sent back to the client, allowing for error pages,
+     * redirects, etc.
+     *
      * @param RequestInterface $request
      * @param array|null       $arguments
      *
@@ -21,7 +28,7 @@ class IsSSTTFilter implements FilterInterface
         if (!isset(session()->mail)) {
             return redirect()->back()->withInput();
         } else {
-            if (!session()->has('role') || (session()->get('role') != 'SSTT')) {
+            if (!session()->has('role') || (session()->get('role') == 'SSTT')) {
                 return redirect()->back()->withInput();
             }
         }

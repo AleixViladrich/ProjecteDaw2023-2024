@@ -3,22 +3,14 @@
         height: 110px;
         /* width:  100vw; */
     }
-
-    .text-danger {
-        color: red !important;
-    }
 </style>
-
 <?= $this->extend('layouts/mainLayout'); ?>
-
-
 <?= $this->section("main_content"); ?>
-<?= session()->get('role') ?>
 <?php if ($add) : ?>
     <script>
         addEventListener("DOMContentLoaded", (event) => {
             let btn = document.createElement('a');
-            btn.href = "<?= base_url('/addTickets') ?>";
+            btn.href = "<?= base_url('/addStudent') ?>";
             btn.classList.add('btn', 'btn-info');
             btn.id = 'list-btn-print';
             btn.style.marginLeft = '5px';
@@ -27,14 +19,13 @@
             div.appendChild(btn);
             document.getElementById('list-btn-exportxls').innerHTML = '<i class="fa-solid fa-file-excel" aria-hidden="true" style="margin-right: 5px"></i><?= lang('ticketsLang.export') ?>';
             document.getElementById('list-btn-print').innerHTML = '<i class="fa-solid fa-print" aria-hidden="true" style="margin-right: 5px"></i><?= lang('ticketsLang.print') ?>';
-            //console.log(document.getElementsByClassName('dataTables_info'));
-            //document.getElementsByClassName('dataTables_info')[0] = 'none';
-        });
+        })
     </script>
 <?php endif ?>
 
 <?= $output ?>
-<div>
+
+<div class="m-2">
     <?php if (session()->getFlashdata('error')) : ?>
         <p style="color: red"><?= session()->getFlashdata('error') ?></p>
     <?php endif; ?>
@@ -42,4 +33,5 @@
         <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
     <?php endif; ?>
 </div>
+
 <?= $this->endSection(); ?>

@@ -39,10 +39,6 @@ class ProfessorModel extends Model
     protected $afterDelete    = [];
 
     // Aleix
-    // obtenir el codi de centre reparador amb la id 
-    public function getGeneratingCodeById ($id) {
-        return $this->where('professor_id', $id)->first();
-    }
 
     //verifica si el professor esta a la taula professor
     public function verifyProfessor ($email) {
@@ -65,7 +61,7 @@ class ProfessorModel extends Model
 
     }
     // funcio per comprovar si es estudiant o professor 
-    public function checkIfProfessorOrStudent($email) {
+    /*public function checkIfProfessorOrStudent($email) {
         // comprovacio professors
         $data = $this->where('email', $email)->first();
         if ($data != null) {
@@ -80,7 +76,7 @@ class ProfessorModel extends Model
             return $valueSession;
         }
         return 0;
-    }
+    }*/
 
     //funcio que al passarli la id ens retorna el professors de aquells centres
     public function getProfessorsByCenterId ($id) {

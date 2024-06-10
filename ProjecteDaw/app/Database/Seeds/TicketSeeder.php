@@ -97,9 +97,21 @@ class TicketSeeder extends Seeder
             'r_center_code' => '43010116', 
             'email_person_center_g' => 'anilei@xtec.cat', 
             'name_person_center_g' => 'Alexander', 
+            'status_id' => '2'
+        ]);
+
+        $model->insert([
+            'ticket_id' => UUID::v4(),
+            'device_type_id' => '2', 
+            'fault_description' => 'L\'ordinador no s\'encen.', 
+            'g_center_code' => null, 
+            'r_center_code' => null, 
+            'email_person_center_g' => 'aleix@xtec.cat', 
+            'name_person_center_g' => 'Aleix', 
             'status_id' => '1'
         ]);
 
+<<<<<<< Updated upstream
         $model->insert([
             'ticket_id' => 'e7c9688b-98e1-4261-abde-eea483c8559a',
             'device_type_id' => '1', 
@@ -121,6 +133,9 @@ class TicketSeeder extends Seeder
             'name_person_center_g' => 'Alexander', 
             'status_id' => '1'
         ]);
+=======
+
+>>>>>>> Stashed changes
         // $model->save([            
         //     'intervention_type'  => 'Memòria RAM'
         // ]);

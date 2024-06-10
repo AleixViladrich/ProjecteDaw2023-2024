@@ -124,6 +124,9 @@ class CenterDataMigration extends Migration
                                 'constraint'     => '2',
                                 'null'           => false,
                         ],
+                        'created_at timestamp default current_timestamp',//SSTT: Ficar-ho a 0
+                        'updated_at timestamp default current_timestamp on update current_timestamp',
+                        'deleted_at timestamp null default null',
                 ]);
                 $this->forge->addKey('student_id', true);
                 $this->forge->addForeignKey('student_center_id', 'centers', 'center_id');

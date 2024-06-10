@@ -31,6 +31,8 @@ class Filters extends BaseConfig
         'OnlySSTT'      => \App\Filters\IsSSTTFilter::class,
         'OnlyProfessor' => \App\Filters\IsProfessorFilter::class,
         'NotStudent'    => \App\Filters\IsNotAlumneFilter::class,
+        'notSSTT'    => \App\Filters\IsNotSSTTFilter::class,
+
     ];
 
     /**

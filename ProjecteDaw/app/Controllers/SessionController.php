@@ -77,11 +77,11 @@ class SessionController extends BaseController
                     return redirect()->to('/viewTickets');
                 }
             } else {
-                session()->setFlashdata('error', 'Failed');
+                session()->setFlashdata('error', lang('LoginLang.error'));
                 return redirect()->back()->withInput();
             }
         } else {
-            session()->setFlashdata('error', 'Failed');
+            session()->setFlashdata('error', lang('LoginLang.error'));
             return redirect()->back()->withInput();
         }
     }
@@ -171,7 +171,11 @@ class SessionController extends BaseController
                     $login_button = '<a href="' . $client->createAuthUrl() . '" class="btn w-100 position-relative" 
                     style="  border: 2px solid blue; background-color: white;">
                     <img src="' . base_url("images/google.jpg") . '" style=" left: 8px; width: 22px; height: 22px;">
+<<<<<<< Updated upstream
                     LOGIN WITH GOOGLE</a>';
+=======
+                    '. lang("LoginLang.googleLogin").'</a>';
+>>>>>>> Stashed changes
                     $data['login_button'] = $login_button;
                     return view("authentication/login/login", $data);
                 }
@@ -183,7 +187,7 @@ class SessionController extends BaseController
             $login_button = '<a href="' . $client->createAuthUrl() . '" class="btn w-100 position-relative" 
             style="  border: 2px solid blue; background-color: white;">
             <img src="' . base_url("images/google.jpg") . '" style=" left: 8px; width: 22px; height: 22px;">
-            LOGIN WITH GOOGLE</a>';
+            '. lang('loginLang.googleLogin').'</a>';
             $data['login_button'] = $login_button;
             return view("authentication/login/login", $data);
         } else {
@@ -202,12 +206,14 @@ class SessionController extends BaseController
         $instanceProfessor = new ProfessorModel();
         $center = $this->request->getPost('center_r');
         session()->set('idCenter', $center);
+        session()->set('id', session()->getFlashdata('id'));
         $data = [
             'repair_center_id' => $center,
         ];
         $instanceProfessor->update(session()->getFlashdata('id'), $data);
         return redirect()->to('/viewTickets');
     }
+<<<<<<< Updated upstream
 
     //register de alumnes 
     public function validateStudents()
@@ -255,6 +261,9 @@ class SessionController extends BaseController
         }
     }
 
+=======
+    
+>>>>>>> Stashed changes
     // link -> al fer click cridar funcio per deslogejar
     public function logout()
     {

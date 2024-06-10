@@ -68,12 +68,12 @@ class TiquetsDataMigration extends Migration
             'email_person_center_g' => [
                 'type' => 'VARCHAR',
                 'constraint' => '32',
-                'null' => false,
+                'null' => true,
             ],
             'name_person_center_g' => [
                 'type' => 'VARCHAR',
                 'constraint' => '32',
-                'null' => false,
+                'null' => true,
             ],
             'status_id' => [
                 'type' => 'INT',

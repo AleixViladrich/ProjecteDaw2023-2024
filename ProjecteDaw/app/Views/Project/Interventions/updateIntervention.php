@@ -1,4 +1,5 @@
 
+<<<<<<< Updated upstream
 <?= $this->section("main_content");?>
 
 <div class="container-fluid p-0">
@@ -10,6 +11,10 @@
                     <h1 class="text-white text-center"><?= $title ?></h1>
                 </div>
             </div>
+=======
+        <div>
+            <h3 class="titleForm mt-0"><?= lang('ticketsLang.update_intervention') ?></h3>
+>>>>>>> Stashed changes
         </div>
         <?= $this->include("layouts/mainLayout") ?>
         <div id="centres" class="col-10">
@@ -35,6 +40,7 @@
                         foreach ($device as $value) {
                             echo "<option value='". $valueN. "'>". $value ."</option>";
                             $valueN++;
+<<<<<<< Updated upstream
                         }  
                         ?>
                     </select>
@@ -58,6 +64,64 @@
                 </div>
             </form>
         </div>
+=======
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-6 my-3 ">
+                    <label for="description"><?= lang('ticketsLang.description') ?></label>
+                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"><?= $inter['description'] ?></textarea>
+                </div>
+                <div class="form-group col-6 my-4 ">
+                    <label for="cicle"><?= lang('ticketsLang.FP') ?></label>
+                    <select class="form-control" name="cicle" id="cicle">
+                        <?php
+                        echo "<option value='ASIX'>ASIX</option>";
+                        echo "<option value='DAM'>DAM</option>";
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-6 my-4 ">
+                    <label for="course"><?= lang('ticketsLang.course') ?></label>
+                    <select class="form-control" name="course" id="course">
+                        <?php
+                        echo "<option value='1'>1r</option>";
+                        echo "<option value='2'>2n</option>";
+                        ?>
+                    </select>
+                </div>
+                <!--language-->
+                <div class="col-12 my-3">
+                    <label for="stock"><?= lang('ticketsLang.stock') ?></label>
+                    <select name="stock" id="stock">
+                        <?php
+                        if ($noStock == false) {
+                            echo "<option value='" . $stockInter['stock_id'] . "'>" . $stockInter['description'] . "</option>";
+                        } else {
+                            echo "<option value=''></option>";
+                        }
+                        foreach ($stock as $value) {
+                            echo "<option value='" . $value['stock_id'] . "'>" . $value['description'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="m-2">
+                    <?php if (session()->getFlashdata('error')) : ?>
+                        <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('success')) : ?>
+                        <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
+                    <?php endif; ?>
+                </div>
+                <div class="col-12 bottom-center pe-0 ">
+                    <input type="submit" class="btn btn-primary" value="<?= lang('ticketsLang.save') ?>">
+                    <a href="<?= base_url("/interventionsOfTicket/" . $inter['ticket_id']) ?>" class="btn btn-light btn-block"><?= lang('ticketsLang.cancel') ?></a>
+                </div>
+            </div>
+        </form>
+>>>>>>> Stashed changes
     </div>
 </div>
 </div>

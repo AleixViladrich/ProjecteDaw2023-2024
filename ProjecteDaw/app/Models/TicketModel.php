@@ -83,6 +83,7 @@ class TicketModel extends Model
     }
     public function deleteTicket($id)
     {
+<<<<<<< Updated upstream
         // helper('date');
 
         // dd($id);
@@ -92,6 +93,9 @@ class TicketModel extends Model
             $this->delete();
         }
         
+=======
+        helper('date');
+>>>>>>> Stashed changes
         // $data = [
         //     'deleted_at' => 
         // ];

@@ -38,12 +38,6 @@ class InterventionTypeModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addInterventionType($interventionType) {
-        $data = [
-            'intervention_type' => $interventionType
-        ];
-    }
-
     public function getAllInterTypes() {
         $interTypeArr = $this->select('intervention_type')->findAll();
 

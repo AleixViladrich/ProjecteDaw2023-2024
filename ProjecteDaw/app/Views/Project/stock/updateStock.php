@@ -7,13 +7,14 @@ echo $this->section("main_content");
     <div id="centres" class="border">
 
         <div>
-            <h3 class="titleForm mt-0">Updade Stock</h3>
+            <h3 class="titleForm mt-0"><?= lang('stockLang.titleUpdate') ?></h3>
         </div>
 
         <form action="<?php base_url("/updateStock/" . $stock["stock_id"]) ?>" method="POST" class="formAdd p-2 pb-0">
             <?= csrf_field() ?>
             <?php if (session()->getFlashdata("level") == 1) : ?>
                 <div class="form-group col-6 my-4 ">
+<<<<<<< Updated upstream
                     <label for="price" class=" bold fs-5">Preu (unitari)</label>
                     <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price" value="<?= $stock['price'] ?>"></input>
                 </div>
@@ -70,6 +71,41 @@ echo $this->section("main_content");
                     </div>
                 </div>
             <?php endif; ?>
+=======
+                    <label for="price" class=" bold fs-5"><?= lang('stockLang.price') ?></label>
+                    <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" value="<?= $stock['price'] ?>" id="price"></input>
+                </div>
+                <div class="form-group col-6 my-4">
+                    <label for="type_piece" class="bold fs-5"><?= lang('stockLang.typePiece') ?></label>
+                    <select class="form-control form-select" name="type_piece"  id="type_piece">
+                        <?php
+                        echo "<option value='' default hidden>" . lang('stockLang.selectOption') . "</option>";
+                        $valueN = 1;
+                        foreach ($types as $value) {
+                            echo "<option value='" . $valueN . "'>" . $value['name'] . " </option>";
+                            $valueN++;
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-12 my-4 ">
+                    <label for="description" class=" bold fs-5"><?= lang('ticketsLang.description') ?></label>
+                    <textarea class="form-control" name="description"  id="description" cols="30" rows="3"><?= $stock['description'] ?></textarea>
+                </div>
+                <div>
+                    <?php if (session()->getFlashdata('error')) : ?>
+                        <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('success')) : ?>
+                        <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
+                    <?php endif; ?>
+                </div>
+                <div class="col-12 bottom-center pe-0 ">
+                    <button type="submit" class="btn btn-primary bold"><?= lang('ticketsLang.save') ?></button>
+                    <a href="<?= base_url("/viewStock") ?>" class="btn btn-light btn-block"><?= lang('ticketsLang.cancel') ?></a>
+                </div>
+            </div>
+>>>>>>> Stashed changes
         </form>
     </div>
 </div>
@@ -79,6 +115,7 @@ echo $this->section("main_content");
         $('select').selectize({
             sortField: 'text'
         });
+<<<<<<< Updated upstream
     });
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -92,6 +129,23 @@ echo $this->section("main_content");
     });
 
 
+=======
+        var stock = <?php echo json_encode($stock['stock_type_id']); ?>;
+        var enabled = <?php echo json_encode(session()->getFlashdata("enabled")); ?>;
+        //selects
+        console.log(enabled);
+        const piece = $('#type_piece')[0].selectize;
+        const description = document.getElementById('description');
+        //defaults
+        piece.setValue(stock);
+        //enabled
+        if (enabled == "true") {
+            piece.disable();
+            description.disabled = true;
+        }
+    });
+
+>>>>>>> Stashed changes
     function checkValidation(event) {
         var key = event.key;
         const unitNumber = event.target.value;

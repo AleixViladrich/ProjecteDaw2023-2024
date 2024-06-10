@@ -18,13 +18,11 @@ class IsProfessorFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (!isset(session()->mail) || !isset(session()->idCenter)) {
+        if (!isset(session()->mail)) {
             return redirect()->back()->withInput();
         } else {
-            if (isset(session()->role) == true && session()->role != "Professor") {
-                if ( session()->role != "Admin") {
-                    return redirect()->back()->withInput();    
-                }
+            if (!session()->has('role') || (session()->get('role') != 'Professor' && session()->get('role') != 'Admin' && session()->get('role') != 'Center')) {
+                return redirect()->back()->withInput();
             }
         }
     }

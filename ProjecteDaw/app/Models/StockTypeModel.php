@@ -38,12 +38,6 @@ class StockTypeModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addStockType($name) {
-        $data = [
-            'name' => $name
-        ];
-    }
-
     public function retrieveAllTypes() {
         return $this->findAll();
     }

@@ -74,11 +74,32 @@ class InterventionModel extends Model
         return $this->where('ticket_id', $id)->findAll();
     }
 
+<<<<<<< Updated upstream
     public function deleteInterventionsByTicketId($id)
+=======
+    public function getSpecificIntervention($id)
+    {
+        return $this->where('intervention_id', $id)->first();
+    }
+
+    public function checkIfInterventionsBlock($id) {
+        $interventions = $this->where('ticket_id', $id)->findAll();
+        foreach ($interventions as $inter) {
+            if ($inter['intervention_type_id'] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function deleteIntervention($id)
+>>>>>>> Stashed changes
     {
         helper('date');
-        $this->where('ticket_id', $id);
-        $this->set('deleted_at', date('Y-m-d H:i:s', now('GMT+2')));
-        $this->update();
+        $instanceST = new StockModel();
+        $stock = $instanceST->retrieveSpecificItemIntervention($id);
+        $stock['intervention_id'] = null;
+        $instanceST->update($stock['stock_id'],$stock);
+        $this->where('intervention_id', $id);
+        $this->delete();
     }
 }

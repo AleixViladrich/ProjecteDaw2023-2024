@@ -35,12 +35,33 @@ class TicketsInterventionsController extends BaseController
             'interventionType__intervention_type' => ['name' => 'Tipus intervenció'],
             'created_at' => ['name' => 'Data creació'],
         ]);
+<<<<<<< Updated upstream
         // $crud->setConfig('centerView');
         $crud->addWhere('ticket_id', $id);
         $crud->setConfig('onlyView');
         // $crud->addItemLink('del', 'fa-mail', base_url('/updateIntervention'), 'Modificar Intervencio');
         // $crud->addItemLink('view', 'fa-file', base_url('/delIntervention'), 'Eliminar Intervencio');
         // falta filtrar per intervencio
+=======
+        $crud->setConfig('ssttView');
+        $crud->addWhere('ticket_id', $id);
+        //obtenim ticket especific
+        $add = true;
+        if ($ticket['status_id'] <= 2) {
+            if (session()->get('role') == "Student" || session()->get('role') == "Professor" || session()->get('role') == "Center" || session()->get('role') == "Admin") {
+                $crud->addItemLink('view', 'fa-solid fa-pen', base_url('/updateIntervention'), 'Modificar Intervencio');
+                if (session()->get('role') == "Professor" || session()->get('role') == "Center") {
+                    $crud->addItemLink('del', 'fa fa-trash-o', base_url('/delIntervention'), 'Eliminar Intervencio');
+                }
+            }
+        } else {
+            $add = false;
+        }
+        // mostreem o no el boto de afegir
+        if (session()->get('role') == "SSTT") {
+            $add = false;
+        }
+>>>>>>> Stashed changes
         $data = [
             'output' => $crud->render(),
             'title' => lang('ticketsLang.titleG'),

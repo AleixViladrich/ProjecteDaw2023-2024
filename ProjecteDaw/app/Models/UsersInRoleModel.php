@@ -41,4 +41,13 @@ class UsersInRoleModel extends Model
     public function getRoleByEmail($email) {
         return $this->where('email', $email)->first();
     }
+
+    public function addStudent($mail) {
+        $data = [
+            'email' => $mail,
+            'idRole' => 5
+        ];
+        $this->insert($data);
+    }
 }
+

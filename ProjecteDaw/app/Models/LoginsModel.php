@@ -59,11 +59,6 @@ class LoginsModel extends Model
         return $role;
     }
 
-    public function findIfUserInRole($id, $roleToSearch)
-    {
-        $query = $this->where();
-    }
-
     public function userExists($email)
     {
         $this->where('email', $email);
@@ -72,5 +67,25 @@ class LoginsModel extends Model
             return true;
         }
         return false;
+    }
+
+    public function addUser($mail, $password) {
+        $data = [
+            'email' => $mail,
+            'password' => $password,
+        ];
+        $this->insert($data);
+    }
+
+    public function updateByEmail($oldEmail, $data)
+    {
+        $this->where('email', $oldEmail);
+        $this->set('email', $data['email']);
+        $this->update();
+        if (isset($data['password'])) {
+            $this->where('email', $data['email']);
+            $this->set('password', $data['password']);
+            $this->update();
+        }
     }
 }

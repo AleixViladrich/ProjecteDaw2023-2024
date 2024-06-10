@@ -13,8 +13,8 @@ class StockSeeder extends Seeder
         $model = new StockModel();
         $model->insert([
             'stock_id' => UUID::v4(),
-            'stock_type_id' => 1,
-            'description' => "hola",
+            'stock_type_id' => 2,
+            'description' => "RAM DDRR4",
             'intervention_id' => null,
             'center_id' => 8000013,
             'purchase_date' =>  date('Y-m-d'),

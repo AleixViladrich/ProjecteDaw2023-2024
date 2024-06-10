@@ -2,6 +2,7 @@
 
 namespace App\Database\Seeds;
 
+use App\Libraries\UUID;
 use App\Models\InterventionModel;
 use CodeIgniter\Database\Seeder;
 
@@ -13,11 +14,16 @@ class InterventionSeeder extends Seeder
         $model = new InterventionModel();
 
         $model->insert([
-            'intervention_id' => '827890ce-5c27-25',
+            'intervention_id' => UUID::v4(),
             'ticket_id' => '6cfdd8c4-d2ce-46b1-b91e-36e229f5238f', 
             'professor_id' => 'cd597db3-a6cb-4cb7-9b1d-848b04a158ff', 
+<<<<<<< Updated upstream
                 'student_id' => '679612ce-5c27-43', 
                 'intervention_type_id' => '1', 
+=======
+            'student_id' => null, 
+            'intervention_type_id' => '1', 
+>>>>>>> Stashed changes
             'description' => 'He cambiat la memoria RAM.', 
             'student_course' => '2', 
             'student_studies' => 'SMX', 
@@ -39,6 +45,17 @@ class InterventionSeeder extends Seeder
                 'student_id' => '679612ce-5c27-43', 
                 'intervention_type_id' => '1', 
             'description' => 'Canvi de la tarjeta de xarxa', 
+            'student_course' => '2', 
+            'student_studies' => 'DAM', 
+        ]);
+
+        $model->insert([
+            'intervention_id' => UUID::v4(),
+            'ticket_id' => '6cfdd8c4-d2ce-46b1-b91e-36e229f5238f', 
+            'professor_id' => 'cd597db3-a6cb-4cb7-9b1d-848b04a158ff', 
+            'student_id' => null, 
+            'intervention_type_id' => '1', 
+            'description' => 'He comprobat la CPU.', 
             'student_course' => '2', 
             'student_studies' => 'DAM', 
         ]);

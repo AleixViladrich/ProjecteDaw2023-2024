@@ -44,7 +44,11 @@ return [
     'UpdatedAt' => 'Updated at',
     'DeletedAt' => 'Deleted at',
     'Status' => 'Status',
+<<<<<<< Updated upstream
     'stock' => "Stock",
     'confirm' => 'Are you sure you want to delete the ticket?',
     'accept' => 'Yes, delete'
+=======
+    'stock' => "Assigna Stock"
+>>>>>>> Stashed changes
 ];

@@ -10,19 +10,26 @@
         <div>
             <form action="<?= base_url('/validateCenter') ?>" method="post">
                 <?= csrf_field(); ?>
-                <div>
-                    <label for="center_r"></label>
-                    <select class="form-control" name="center_r" id="center_r">
-                        <?php
-                        echo "<option value=''  default hidden>".  lang('ticketsLang.choose_center') ."</option>";
-                        foreach ($center as $value) {
-                            echo "<option value='" . $value['center_id'] . "'>" . $value['name'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class=" col-12 bottom-center pe-0 ">
-                    <button type="submit" class="btn btn-primary bold"><?= lang('ticketsLang.save')?></button>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="center_r"></label>
+                        <select class="form-control" name="center_r" id="center_r">
+                            <?php
+                            echo "<option value=''  default hidden>" .  lang('ticketsLang.choose_center') . "</option>";
+                            foreach ($center as $value) {
+                                echo "<option value='" . $value['center_id'] . "'>" . $value['name'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary bold"><?= lang('ticketsLang.save') ?></button>
+                    </div>
+                    <div class="m-2">
+                        <?php if (session()->getFlashdata('error')) : ?>
+                            <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </form>
         </div>

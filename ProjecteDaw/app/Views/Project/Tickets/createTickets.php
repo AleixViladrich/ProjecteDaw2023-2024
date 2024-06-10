@@ -3,7 +3,6 @@ $this->extend('layouts/mainLayout');
 echo $this->section("main_content");
 ?>
 
-
 <div class="container-fluid mt-3">
     <div id="centres" class="border">
 
@@ -67,6 +66,14 @@ echo $this->section("main_content");
                     <input type="text" class="form-control"  name="name" id="name"></input> 
                 </div>
                 <!--Professor-->
+                <div>
+                    <?php if (session()->getFlashdata('error')) : ?>
+                        <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('success')) : ?>
+                        <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
+                    <?php endif; ?>
+                </div>
                 <!--Fi variables-->
                 <div class="col-12 bottom-center pe-0 ">
                     <button type="submit" class="btn btn-primary bold"><?= lang('ticketsLang.save') ?></button>
@@ -93,14 +100,11 @@ echo $this->section("main_content");
         name.disabled = false;
         email.disabled = false;
         selectGen.on('change', function(value) {
-            console.log(value);
             if (value != '') {
-                console.log(value);
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200) {
                         const response = JSON.parse(xhttp.responseText);
-                        console.log(response);
                         email.value = response.email;
                     } else {
                         console.log('error');

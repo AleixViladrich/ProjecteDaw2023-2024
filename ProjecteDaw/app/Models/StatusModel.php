@@ -38,13 +38,6 @@ class StatusModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addStatus($status)
-    {
-        $data = [
-            'status' => $status
-        ];
-    }
-
     public function getAllStatus()
     {
         $status = $this->select('status')->findAll();
@@ -56,6 +49,54 @@ class StatusModel extends Model
         }
 
         return $dataStatus;
+    }
+
+    public function getStatusSSTT($block) {
+        $statuses = $this->findAll();
+        $statusArr = [];
+        foreach ($statuses as $status) {
+            if ($block == true) {
+                if ($status['status_id'] == 4) {
+                    $statusArr[0] = $status;
+                }
+            } else {
+                if ($status['status_id'] == 3) {
+                    $statusArr[0] = $status;
+                }
+            }
+            if ($status['status_id'] == 5) {
+                $statusArr[1] = $status;
+                
+            }
+            if ($status['status_id'] == 6) {
+                $statusArr[2] = $status;
+                
+            }
+        }
+        return $statusArr;
+
+    }
+
+    public function getStatusProf($block) {
+        $statuses = $this->findAll();
+        $statusArr = [];
+        
+        foreach ($statuses as $status) {
+            if ($status['status_id'] == 2) {
+                $statusArr[0] = $status;
+                
+            }
+            if ($block == true) {
+                if ($status['status_id'] == 4) {
+                    $statusArr[1] = $status;;
+                }
+            } else {
+                if ($status['status_id'] == 3) {
+                    $statusArr[1] = $status;
+                }
+            }
+        }
+        return $statusArr;
     }
 
     public function getStatus($id)

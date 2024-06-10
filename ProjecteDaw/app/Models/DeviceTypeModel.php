@@ -38,11 +38,6 @@ class DeviceTypeModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addDeviceType($deviceType) {
-        $data = [
-            'device_type' => $deviceType
-        ];
-    }
 
     public function getAllDevices()
     {

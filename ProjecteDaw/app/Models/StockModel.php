@@ -63,6 +63,10 @@ class StockModel extends Model
         return $this->where('stock_id', $stock)->first();
     }
 
+    public function retrieveSpecificItemIntervention($id) {
+        return $this->where('intervention_id', $id)->first();
+    }
+
     //Aleix
     public function checkIfInterventionAssigned($id) {
         $stock = $this->where("stock_id", $id)->first();

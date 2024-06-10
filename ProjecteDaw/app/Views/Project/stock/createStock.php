@@ -1,6 +1,5 @@
 <?php
 $this->extend('layouts/mainLayout');
-$testUser = 2;
 echo $this->section("main_content");
 ?>
 
@@ -8,7 +7,7 @@ echo $this->section("main_content");
     <div id="centres" class="border">
 
         <div>
-            <h3 class="titleForm mt-0">Afegir stock</h3>
+            <h3 class="titleForm mt-0"><?= lang('stockLang.titleAdd') ?></h3>
         </div>
 
         <form action="<?php base_url("/addStock") ?>" method="POST" class="formAdd p-2 pb-0">
@@ -18,13 +17,13 @@ echo $this->section("main_content");
             <div class="row ">
                 <div class="form-group col-6 my-4 ">
                     <label for="description" class=" bold fs-5"><?= lang('ticketsLang.description') ?></label>
-                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"></textarea>
+                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"><?= old('description') ?></textarea>
                 </div>
                 <div class="form-group col-6 my-4">
-                    <label for="type_piece" class=" bold fs-5">Tipus peça</label>
+                    <label for="type_piece" class=" bold fs-5"><?= lang('stockLang.typePiece') ?></label>
                     <select class="form-control form-select" name="type_piece" id="type_piece">
                         <?php
-                        echo "<option value='' default hidden>Escull el tipus...</option>";
+                        echo "<option value='' default hidden>" . lang('stockLang.selectOption') . "</option>";
                         $valueN = 1;
                         foreach ($types as $value) {
                             if ($valueN == 1) {
@@ -38,6 +37,7 @@ echo $this->section("main_content");
                     </select>
                 </div>
                 <div class="form-group col-6 my-4 ">
+<<<<<<< Updated upstream
                     <label for="price" class=" bold fs-5">Preu (unitari)</label>
                     <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price"></input>
                 </div>
@@ -55,9 +55,22 @@ echo $this->section("main_content");
                         }
                         ?>
                     </select>
+=======
+                    <label for="price" class=" bold fs-5"><?= lang('stockLang.priceUnit') ?></label>
+                    <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price" min="0" value="<?= old('price') ?>"></input>
+                </div>
+                <div class="form-group col-6 my-4 ">
+                    <label for="number_units" class=" bold fs-5"><?= lang('stockLang.numberUnits') ?></label>
+                    <input type="number" class="form-control" value="1" onkeydown="checkValidation(event)" name="number_units" id="number_units" min="1" <?= old('number_units') ?>></input>
+>>>>>>> Stashed changes
                 </div>
                 <div>
-                    <?= session()->getFlashdata('error') ?>
+                    <?php if (session()->getFlashdata('error')) : ?>
+                        <p style="color: red"><?= session()->getFlashdata('error') ?></p>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('success')) : ?>
+                        <p style="color: grey"><?= session()->getFlashdata('success') ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="col-12 bottom-center pe-0 ">
                     <button type="submit" class="btn btn-primary bold"><?= lang('ticketsLang.save') ?></button>
