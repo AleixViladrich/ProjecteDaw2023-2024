@@ -1,0 +1,21 @@
+<?php 
+return [
+    'email_student' => 'Student Email',
+    'createDate' => 'Creation Date',
+    'updateDate' => 'Update Date',
+    'successAdd' => 'Student added successfully',
+    'error' => 'Incorrect data',
+    'successUpdate' => 'Email updated successfully',
+    'errorMinChar' => 'Error, the password must be at least 6 characters long',
+    'errorMin' => 'Error, email or password required',
+    'errorDuplicate' => 'Error, duplicate email',
+    'successDelete' => 'Student deleted successfully',
+    'addEmail' => 'Add a new email',
+    'genNewPassword' => 'Generate a new password',
+    'show' => 'Show',
+    'hide' => 'Hide',
+    'updateEmail' => 'Email to update',
+    'passCheck' => 'Do you want to change the password?',
+    'titleAdd' => 'Student creation',
+    'titleUpdate' => 'Student update',
+];

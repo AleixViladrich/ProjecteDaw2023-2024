@@ -83,24 +83,9 @@ class TicketModel extends Model
     }
     public function deleteTicket($id)
     {
-<<<<<<< Updated upstream
-        // helper('date');
-
-        // dd($id);
-
-        if ($id != null) {
-            $this->where('ticket_id', $id);
-            $this->delete();
-        }
-        
-=======
         helper('date');
->>>>>>> Stashed changes
-        // $data = [
-        //     'deleted_at' => 
-        // ];
-        // $this->where('ticket_id', $id);
-        // $this->set('deleted_at', date('Y-m-d H:i:s', now('GMT+2')));
-        // $this->update();
+        $this->where('ticket_id', $id);
+        $this->set('deleted_at', date('Y-m-d H:i:s', now('GMT+2')));
+        $this->update();
     }
 }

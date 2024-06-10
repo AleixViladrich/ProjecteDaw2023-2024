@@ -37,32 +37,12 @@ echo $this->section("main_content");
                     </select>
                 </div>
                 <div class="form-group col-6 my-4 ">
-<<<<<<< Updated upstream
-                    <label for="price" class=" bold fs-5">Preu (unitari)</label>
-                    <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price"></input>
-                </div>
-                <div class="form-group col-6 my-4 ">
-                    <label for="number_units" class=" bold fs-5">Numero de unitats</label>
-                    <input type="number" class="form-control" onkeydown="checkValidation(event)" name="number_units" id="number_units"></input>
-                </div>
-                <div class="col-6 mt-4 mb-5">
-                    <label for="center" class=" bold fs-5"><?= lang('ticketsLang.issuing_center') ?></label>
-                    <select name="center" id="center">
-                        <?php
-                        echo "<option value='' default hidden>Escull centre...</option>";
-                        foreach ($center as $value) {
-                            echo "<option value='" . $value['center_id'] . "'>" . $value['name'] . "</option>";
-                        }
-                        ?>
-                    </select>
-=======
                     <label for="price" class=" bold fs-5"><?= lang('stockLang.priceUnit') ?></label>
                     <input type="number" class="form-control" name="price" onkeydown="checkValidationPrice(event)" id="price" min="0" value="<?= old('price') ?>"></input>
                 </div>
                 <div class="form-group col-6 my-4 ">
                     <label for="number_units" class=" bold fs-5"><?= lang('stockLang.numberUnits') ?></label>
                     <input type="number" class="form-control" value="1" onkeydown="checkValidation(event)" name="number_units" id="number_units" min="1" <?= old('number_units') ?>></input>
->>>>>>> Stashed changes
                 </div>
                 <div>
                     <?php if (session()->getFlashdata('error')) : ?>

@@ -40,6 +40,7 @@ return [
     'stockTitle' => "Inventari",
     'ID' => 'Identificador',
     'DeviceType' => 'Tipus de dispositiu',
+    'interType' => 'Tipus',
     'Description' => 'Descripció',
     'EmitterCenter' => 'Centre emisor',
     'RepairCenter' => 'Centre reparador',
@@ -49,10 +50,6 @@ return [
     'UpdatedAt' => 'Data ultima modificació',
     'DeletedAt' => 'Data d\'eliminaciò',
     'Status' => 'Estat',
-<<<<<<< Updated upstream
-    'confirm' => 'Estàs segur que vols eliminar el tiquet?',
-    'accept' => 'Sí, eliminar'
-=======
     'successAdd' => 'Intervencio afegida correctament',
     'successUpdate' => 'Intervencio actualitzada correctament',
     'successDelete' => 'intervencio borrada correctament',
@@ -63,5 +60,4 @@ return [
     'successUpdateT' => 'Intervencio actualitzada correctament',
     'successDel' => 'Tiquet borrat correctamet',
     'confirm' => 'Estas segur de que vols tancar el tiquet?, no podras desfer aquest canvi',
->>>>>>> Stashed changes
 ];

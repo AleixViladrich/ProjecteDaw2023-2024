@@ -74,9 +74,6 @@ class InterventionModel extends Model
         return $this->where('ticket_id', $id)->findAll();
     }
 
-<<<<<<< Updated upstream
-    public function deleteInterventionsByTicketId($id)
-=======
     public function getSpecificIntervention($id)
     {
         return $this->where('intervention_id', $id)->first();
@@ -92,13 +89,14 @@ class InterventionModel extends Model
         return false;
     }
     public function deleteIntervention($id)
->>>>>>> Stashed changes
     {
         helper('date');
         $instanceST = new StockModel();
         $stock = $instanceST->retrieveSpecificItemIntervention($id);
-        $stock['intervention_id'] = null;
-        $instanceST->update($stock['stock_id'],$stock);
+        if ($stock != null) {
+            $stock['intervention_id'] = null;
+            $instanceST->update($stock['stock_id'],$stock);   
+        }
         $this->where('intervention_id', $id);
         $this->delete();
     }

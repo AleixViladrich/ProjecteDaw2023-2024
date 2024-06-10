@@ -14,23 +14,6 @@ $routes->get('/changeLang/(:segment)', 'SessionController::changeLang/$1');
 //tickets
 $routes->match(['GET','POST'], '/viewTickets', 'TicketsController::viewTickets', ['filter' => 'UserLogged']);
 // addTickets 
-<<<<<<< Updated upstream
-$routes->get('/addTickets', 'TicketsController::addTicket');
-$routes->post('/addTickets', 'TicketsController::addTicketPost');
-
-
-//eliminar Tickets
-$routes->get('/delTicket/(:segment)', 'TicketsController::deleteTicket/$1');
-
-// confirm delete ticket
-$routes->get('/confirmDel/(:segment)', 'TicketsController::confirmDelete/$1');
-
-
-
-//Iniciar seesio SSTT
-// $routes->get('/loginAuth', 'SessionController::loginNormal');
-
-=======
 $routes->get('/addTickets', 'TicketsController::addTicket', ['filter' => 'NotStudent']);
 $routes->post('/addTickets', 'TicketsController::addTicketPost', ['filter' => 'NotStudent']);
 //update tickets
@@ -42,7 +25,6 @@ $routes->post('/assignTicket/(:segment)', 'TicketsController::assignTicketPost/$
 //eliminar Tickets
 $routes->get('/delTicket/(:segment)', 'TicketsController::deleteTicket/$1', ['filter' => 'NotStudent']);
 //logins i sessions
->>>>>>> Stashed changes
 //iniciar sessio profe, alum
 $routes->get('/login', 'SessionController::google_login', ['filter' => 'UserNotLogged']);
 $routes->post('/loginAuth', 'SessionController::login_post_Normal', ['filter' => 'UserNotLogged']);
@@ -52,31 +34,14 @@ $routes->post('/validateCenter', 'SessionController::validateCenter');
 $routes->get('/logout', 'SessionController::logout', ['filter' => 'UserNotLogged']);
 
 //pagina intermitja entre tickets i intervencio
-<<<<<<< Updated upstream
-$routes->match(['GET','POST'], '/interventionsOfTicket/(:segment)', 'TicketsInterventionsController::viewIntermediary/$1');
-
-//iintervencio en concret
-$routes->get('/intervention/(:segment)/', 'InterventionsController::viewInterventions');
-
-//assignacio tickets
-$routes->get('/assignTicket/(:segment)', 'TicketsController::assignTicket/$1');
-$routes->post('/assignTicket/(:segment)', 'TicketsController::assignTicketPost/$1');
-
-=======
 $routes->match(['GET','POST'], '/interventionsOfTicket/(:segment)', 'TicketsInterventionsController::viewIntermediary/$1', ['filter' => 'UserLogged']);
->>>>>>> Stashed changes
 //crud Intervencions
 $routes->get('/addIntervention/(:segment)', 'InterventionsController::addIntervention/$1', ['filter' => 'notSSTT']);
 $routes->get('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention/$1', ['filter' => 'notSSTT']);
 $routes->get('/delIntervention/(:segment)', 'InterventionsController::delIntervention/$1', ['filter' => 'OnlyProfessor']);
 
-<<<<<<< Updated upstream
-$routes->post('/addIntervention', 'InterventionsController::addIntervention_post');
-$routes->post('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention/$1');
-=======
 $routes->post('/addIntervention', 'InterventionsController::addIntervention_post', ['filter' => 'notSSTT']);
 $routes->post('/updateIntervention/(:segment)', 'InterventionsController::updateIntervention_post/$1', ['filter' => 'notSSTT']);
->>>>>>> Stashed changes
 
 $route['default_controller'] = 'TicketsController::viewTickets';
 
@@ -91,8 +56,6 @@ $routes->post('/updateStock/(:segment)', 'StockController::updateStock_post/$1',
 //del
 $routes->get('/delStock/(:segment)', 'StockController::deleteStock/$1', ['filter' => 'OnlyProfessor']);
 
-<<<<<<< Updated upstream
-=======
 //students
 $routes->MATCH(['GET','POST'], '/viewStudents', 'StudentsController::viewStudents', ['filter' => 'OnlyProfessor']);
 //add
@@ -104,7 +67,6 @@ $routes->post('/updateStudent/(:segment)', 'StudentsController::updateStudent_po
 //del
 $routes->get('/delStudent/(:segment)', 'StudentsController::delStudent/$1', ['filter' => 'OnlyProfessor']);
 //redirect
->>>>>>> Stashed changes
 $routes->get('/', 'SessionController::redirectToLogin');
 //AJAX
 $routes->get('/emailCenter/(:segment)', 'Gets::emailByCenter/$1');

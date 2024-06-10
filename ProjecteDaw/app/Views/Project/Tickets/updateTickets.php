@@ -86,6 +86,7 @@ echo $this->section("main_content");
         if (change == false) {
             status.disable();
         };
+        console.log(alert);
         var text = <?php echo json_encode(lang('ticketsLang.confirm')); ?>;
         if (alert == true) {
             $('#update').on('submit', function(event) {

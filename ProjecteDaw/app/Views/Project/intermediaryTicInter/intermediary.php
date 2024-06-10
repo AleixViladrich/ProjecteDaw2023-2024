@@ -14,20 +14,17 @@
 
         <div class="col-3">
 
-            <?php if ($ticket['device_type_id'] == 1): ?>
+            <?php if ($ticket['device_type_id'] == 1) : ?>
                 <div class="mb-5 mt-2 text-center">
-                    <img src="<?= base_url('images/ordinador.png') ?>" alt="Logo"
-                        style="max-height: 300px; max-width:250px;">
+                    <img src="<?= base_url('images/ordinador.png') ?>" alt="Logo" style="max-height: 300px; max-width:250px;">
                 </div>
-            <?php elseif ($ticket['device_type_id'] == 2): ?>
+            <?php elseif ($ticket['device_type_id'] == 2) : ?>
                 <div class="mb-2 text-center mt-0">
-                    <img src="<?= base_url('images/projector.png') ?>" alt="Logo"
-                        style="max-height: 300px; max-width:250px;">
+                    <img src="<?= base_url('images/projector.png') ?>" alt="Logo" style="max-height: 300px; max-width:250px;">
                 </div>
-            <?php elseif ($ticket['device_type_id'] == 3): ?>
+            <?php elseif ($ticket['device_type_id'] == 3) : ?>
                 <div class="mb-3 text-center">
-                    <img src="<?= base_url('images/pantalla.png') ?>" alt="Logo"
-                        style="max-height: 300px; max-width:250px;">
+                    <img src="<?= base_url('images/pantalla.png') ?>" alt="Logo" style="max-height: 300px; max-width:250px;">
                 </div>
             <?php endif ?>
 
@@ -103,13 +100,24 @@
                 <h3 style="font-weight: bold;"> <?= lang('ticketsLang.intervention') ?> </h3>
 
             </div>
-            <!-- <?php if(session()->get('role') != 'SSTT' && session()->get('role') != 'Center'): ?>
-                <div class="d-flex justify-content-end mb-2">
-                    <a class="btn" style="background-color: #0DCAF0;"
-                        href="<?= base_url('/addIntervention/' . $ticket['ticket_id']) ?>"><i class="fa fa-plus"
-                            aria-hidden="true"></i> <?= lang('ticketsLang.add') ?></a>
-                </div>
-            <?php endif ?> -->
+            <?php if ($add) : ?>
+                <script>
+                    addEventListener("DOMContentLoaded", (event) => {
+                        let btn = document.createElement('a');
+                        btn.href = "<?= base_url('/addIntervention/') . $ticket['ticket_id'] ?>";
+                        btn.classList.add('btn', 'btn-info');
+                        btn.id = 'list-btn-print';
+                        btn.style.marginLeft = '5px';
+                        btn.innerHTML = '<i class="fa-solid fa-plus"></i> <?= lang('ticketsLang.add') ?>';
+                        let div = document.getElementsByClassName('d-flex')[0];
+                        div.appendChild(btn);
+                        document.getElementById('list-btn-exportxls').innerHTML = '<i class="fa-solid fa-file-excel" aria-hidden="true" style="margin-right: 5px"></i><?= lang('ticketsLang.export') ?>';
+                        document.getElementById('list-btn-print').innerHTML = '<i class="fa-solid fa-print" aria-hidden="true" style="margin-right: 5px"></i><?= lang('ticketsLang.print') ?>';
+                        //console.log(document.getElementsByClassName('dataTables_info'));
+                        //document.getElementsByClassName('dataTables_info')[0] = 'none';
+                    });
+                </script>
+            <?php endif ?>
             <?= $output ?>
             <div class="m-1">
                 <?php if (session()->getFlashdata('error')) : ?>

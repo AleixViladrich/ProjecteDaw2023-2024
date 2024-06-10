@@ -188,15 +188,11 @@
                     <div class="menuButton mt-2 mb-3 ">
                         <a href="<?= base_url('/viewStock') ?>" class="py-2 ms-1 c-5 fs-5" style="text-decoration: none;">
                             <i class="fa-solid fa-boxes-stacked ms-4 me-2"></i>
-<<<<<<< Updated upstream
-                            <?= lang('ticketsLang.stock')?>
-=======
                             <?= lang('ticketsLang.stockTitle') ?>
->>>>>>> Stashed changes
                         </a>
                     </div>
                     <div class="menuButton mt-2 mb-3 ">
-                        <a href="<?= base_url('/validateStudents') ?>" class="py-2 ms-1 c-5 fs-5" style="text-decoration: none;">
+                        <a href="<?= base_url('/viewStudents') ?>" class="py-2 ms-1 c-5 fs-5" style="text-decoration: none;">
                             <i class="fa-solid fa-user ms-4 me-2"></i>
                             <?= lang('ticketsLang.student')?>
                         </a>

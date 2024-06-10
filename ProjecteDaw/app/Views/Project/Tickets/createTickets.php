@@ -33,7 +33,7 @@ echo $this->section("main_content");
                     </select>
                 </div>
                 <!--Començament de les variables-->
-                <?php if($role == 'SSTT'): ?>
+                <?php if(session()->get('role') == 'SSTT'): ?>
                 <div class="col-6 mt-4 mb-5">
                     <label for="center_g" class=" bold fs-5"><?= lang('ticketsLang.issuing_center') ?></label>
                     <select name="center_g" id="center_g">
@@ -59,11 +59,11 @@ echo $this->section("main_content");
                 <?php endif; ?>
                 <div class="form-group col-6 my-4 ">
                     <label for="email" class=" bold fs-5"><?= lang('ticketsLang.teacher_email') ?> </label>
-                    <input type="text" class="form-control" name="email" id="email" value="<?php if(session()->get('role') == 'Professor') {echo session()->get('mail');} ?>"></input> <!--Correu per sessio-->
+                    <input type="text" class="form-control" name="email" id="email" value="<?php if(session()->get('role') == 'Professor') {echo session()->get('mail');} ?>"> <!--Correu per sessio-->
                 </div>
                 <div class="form-group col-6 my-4 ">
-                    <label for="name" class=" bold fs-5"><?= lang('ticketsLang.teacher_name') ?></label> <!--Nom per sessio-->
-                    <input type="text" class="form-control"  name="name" id="name"></input> 
+                    <label for="name" class=" bold fs-5"><?= lang('ticketsLang.teacher_name') ?></label>
+                    <input type="text" class="form-control"  name="name" id="name" v>
                 </div>
                 <!--Professor-->
                 <div>

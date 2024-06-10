@@ -51,6 +51,10 @@ class StudentModel extends Model
         return $this->where("email", $email)->first();
     }
 
+    public function obtainStById($id) {
+        return $this->where("student_id", $id)->first();
+    }
+
     public function updateLang($lang){
         $data = [
             'language' => $lang
@@ -60,8 +64,6 @@ class StudentModel extends Model
         return $this->where('email', session()->get('mail'))->set($data)->update();
     }
 
-<<<<<<< Updated upstream
-=======
     
 
     public function updateSt($id, $mail) {
@@ -92,5 +94,4 @@ class StudentModel extends Model
         $instanceUIR->where('email', $data['email'])->delete();
         $instanceL->where('email', $data['email'])->delete();
     }
->>>>>>> Stashed changes
 }

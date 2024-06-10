@@ -35,14 +35,6 @@ class TicketsInterventionsController extends BaseController
             'interventionType__intervention_type' => ['name' => 'Tipus intervenció'],
             'created_at' => ['name' => 'Data creació'],
         ]);
-<<<<<<< Updated upstream
-        // $crud->setConfig('centerView');
-        $crud->addWhere('ticket_id', $id);
-        $crud->setConfig('onlyView');
-        // $crud->addItemLink('del', 'fa-mail', base_url('/updateIntervention'), 'Modificar Intervencio');
-        // $crud->addItemLink('view', 'fa-file', base_url('/delIntervention'), 'Eliminar Intervencio');
-        // falta filtrar per intervencio
-=======
         $crud->setConfig('ssttView');
         $crud->addWhere('ticket_id', $id);
         //obtenim ticket especific
@@ -61,11 +53,10 @@ class TicketsInterventionsController extends BaseController
         if (session()->get('role') == "SSTT") {
             $add = false;
         }
->>>>>>> Stashed changes
         $data = [
             'output' => $crud->render(),
-            'title' => lang('ticketsLang.titleG'),
             'ticket' => $ticket,
+            'add' => $add,
             'status' => $status->getStatus($ticket['status_id'])
         ];
 

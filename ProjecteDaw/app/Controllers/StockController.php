@@ -28,12 +28,7 @@ class StockController extends BaseController
         $crud->setTable('stockview');
         $crud->setPrimaryKey('stock_id');
         $crud->setRelation('stock_type_id', 'stocktype', 'stock_type_id', 'name');
-<<<<<<< Updated upstream
-        $crud->setRelation('center_id', 'centers', 'center_id', 'name');
-        $crud->setColumns(['stock_id', 'stocktype__name', 'intervention_id', 'centers__name', 'purchase_date', 'price']);
-=======
         $crud->setColumns(['stock_id', 'stocktype__name', 'interdescription', 'purchase_date', 'price']);
->>>>>>> Stashed changes
         $crud->setColumnsInfo([
             'stock_id' => [
                 'name' => lang('stockLang.id'),
@@ -46,15 +41,9 @@ class StockController extends BaseController
             'stocktype__name' => [
                 'name' => lang('stockLang.name'),
             ],
-<<<<<<< Updated upstream
-            'intervention_id' => [
-                'name' => 'Intervencio assignada'
-            ],
-=======
             'interdescription' => [
                 'name' => lang('stockLang.intervention'),
-            ],/*
->>>>>>> Stashed changes
+            ],
             'centers__name' => [
                 'name' => 'centre del stock',
             ],
@@ -67,14 +56,9 @@ class StockController extends BaseController
         ]);
         $crud->addItemLink('updateStock', 'fa-solid fa-pen', base_url('updateStock'), 'Update stock');
         $crud->addItemLink('delTicket', 'fa fa-trash-o', base_url('/delStock'), 'Eliminar stock');
-<<<<<<< Updated upstream
-
-        $crud->setConfig('ssttView');
-=======
         $crud->addWhere("center_id", session()->get('idCenter'));
         $crud->setConfig('ssttView');
         //$crud->addWhere('center_id', session()->get('idCenter'));
->>>>>>> Stashed changes
         $data['output'] = $crud->render();
         
 
@@ -111,12 +95,6 @@ class StockController extends BaseController
                     'required' => 'camp requerit',
                 ],
             ],
-            'center' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'camp requerit',
-                ],
-            ],
             'number_units' => [
                 'rules' => 'required',
                 'errors' => [
@@ -130,7 +108,7 @@ class StockController extends BaseController
             $description = $this->request->getPost('description');
             $typePiece = $this->request->getPost('type_piece');
             $price = $this->request->getPost('price');
-            $center = $this->request->getPost('center');
+            $center = session()->get('idCenter');
             $numberItems = $this->request->getPost('number_units');
             if ($numberItems <= 0) {
                 $numberItems = 1;
@@ -160,97 +138,40 @@ class StockController extends BaseController
         $data['center'] =  $instanceC->getAllCentersId();
         if ($updateLevel == true) {
             //tiquet assignat
-<<<<<<< Updated upstream
-            session()->setFlashdata("level", 1);
-        } else {
-            //tiquet no assignat
-            session()->setFlashdata("level", 0);
-=======
             session()->setFlashdata("enabled", "true");
         } else {
             //tiquet no assignat
             session()->setFlashdata("enabled", "false");
->>>>>>> Stashed changes
         }
         return view('Project/stock/updateStock', $data);
     }
 
     public function updateStock_post($id)
     {
-<<<<<<< Updated upstream
-        if (session()->getFlashdata("level") == 1) {
-
-        }
-        if (session()->getFlashdata("level") == 0) {
-            $validationRules = [
-                'description' => [
-=======
         $enabled = session()->getFlashdata('enabled');
         if ($enabled == "true") {
             $validationRules = [
                 'price' => [
->>>>>>> Stashed changes
                     'rules' => 'required',
                     'errors' => [
                         'required' => 'camp requerit',
                     ],
                 ],
-<<<<<<< Updated upstream
-                'type_piece' => [
-=======
             ];
         } else {
             $validationRules = [
                 'description' => [
->>>>>>> Stashed changes
                     'rules' => 'required',
                     'errors' => [
                         'required' => 'camp requerit',
                     ],
                 ],
-<<<<<<< Updated upstream
-                'price' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'camp requerit',
-                    ],
-                ],
-                'center' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'camp requerit',
-                    ],
-                ],
-                'number_units' => [
-=======
                 'type_piece' => [
->>>>>>> Stashed changes
                     'rules' => 'required',
                     'errors' => [
                         'required' => 'camp requerit',
                     ],
                 ],
-<<<<<<< Updated upstream
-            ];
-            //validation
-            if ($this->validate($validationRules)) {
-                $instanceS = new StockModel();
-                $description = $this->request->getPost('description');
-                $typePiece = $this->request->getPost('type_piece');
-                $price = $this->request->getPost('price');
-                $center = $this->request->getPost('center');
-                $numberItems = $this->request->getPost('number_units');
-                if ($numberItems <= 0) {
-                    $numberItems = 1;
-                }
-                for ($i = 0; $i < $numberItems; $i++) {
-                    $instanceS->addStock($description, $typePiece, $center, $price);
-                }
-            } else {
-                session()->setFlashdata('error', 'dades insuficients');
-                return redirect()->back()->withInput();
-            }
-=======
                 'price' => [
                     'rules' => 'required',
                     'errors' => [
@@ -282,7 +203,6 @@ class StockController extends BaseController
         } else {
             session()->setFlashdata('error', lang('stockLang.error'));
             return redirect()->back()->withInput();
->>>>>>> Stashed changes
         }
         return redirect()->back()->withInput();
     }

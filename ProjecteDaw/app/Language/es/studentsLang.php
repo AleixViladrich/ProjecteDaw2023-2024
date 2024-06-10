@@ -1,0 +1,21 @@
+<?php
+return [
+    'email_student' => 'Correo electrónico del estudiante',
+    'createDate' => 'Fecha de creación',
+    'updateDate' => 'Fecha de actualización',
+    'successAdd' => 'Estudiante añadido correctamente',
+    'error' => 'Datos incorrectos',
+    'successUpdate' => 'Correo electrónico actualizado correctamente',
+    'errorMinChar' => 'Error, la contraseña debe tener al menos 6 caracteres',
+    'errorMin' => 'Error, correo electrónico o contraseña requeridos',
+    'errorDuplicate' => 'Error, correo electrónico duplicado',
+    'successDelete' => 'Estudiante eliminado correctamente',
+    'addEmail' => 'Agregar un nuevo correo electrónico',
+    'genNewPassword' => 'Generar una nueva contraseña',
+    'show' => 'Mostrar',
+    'hide' => 'Ocultar',
+    'updateEmail' => 'Correo electrónico a actualizar',
+    'passCheck' => '¿Quieres cambiar la contraseña?',
+    'titleAdd' => 'Creación de un estudiante',
+    'titleUpdate' => 'Actualización de un estudiante',
+];

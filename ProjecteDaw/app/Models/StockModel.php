@@ -63,8 +63,16 @@ class StockModel extends Model
         return $this->where('stock_id', $stock)->first();
     }
 
+    public function checkStockOfIntervention($idInter) {
+        return $this->where('intervention_id', $idInter)->first();
+    }
+
     public function retrieveSpecificItemIntervention($id) {
         return $this->where('intervention_id', $id)->first();
+    }
+
+    public function checkStockOfCenterAvailable($id) {
+        return $this->where('center_id', $id)->where('intervention_id', null)->findAll();
     }
 
     //Aleix

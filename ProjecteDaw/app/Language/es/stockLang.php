@@ -1,23 +1,25 @@
 <?php
 return [
-    'name' => 'Tipo de stock',
-    'intervention' => 'Intervención asignada',
-    'purchaseDate' => 'Día de compra',
+    'id' => 'Identificador',
+    'name' => 'Tipo de Inventario',
+    'intervention' => 'Intervención Asignada',
+    'purchaseDate' => 'Fecha de Compra',
     'priceUnit' => 'Precio (Unitario)',
     'price' => 'Precio',
-    'updateStock' => 'Actualizar stock',
-    'deleteStock' => 'Eliminar stock',
-    'successAdd' => 'Stock añadido correctamente',
+    'updateStock' => 'Inventario Actualizado',
+    'deleteStock' => 'Inventario Eliminado',
+    'successAdd' => 'Pieza añadida correctamente',
     'successUpdate' => 'Pieza actualizada correctamente',
     'error' => 'Error, datos insuficientes',
-    'errorDelete' => 'No se puede eliminar un ticket asignado',
-    'successDelete' => 'Ticket eliminado correctamente',
-    //views
-    //add
-    'titleAdd' => 'Añadir stock',
-    'typePiece' => 'Tipo de pieza',
+    'errorDelete' => 'No se puede eliminar una pieza asignada',
+    'successDelete' => 'Pieza eliminada correctamente',
+    // views
+    // add
+    'titleAdd' => 'Creación de Inventario',
+    'typePiece' => 'Tipo de Pieza',
     'selectOption' => 'Elige el tipo...',
-    'numberUnits' => 'Número de unidades',
-    //Update
-    'titleUpdate' => 'Actualización de stock',
+    'numberUnits' => 'Número de Unidades',
+    // Update
+    'titleUpdate' => 'Actualización de Inventario',
 ];
+

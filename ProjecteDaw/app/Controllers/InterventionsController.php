@@ -4,17 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\InterventionTypeModel;
+use App\Models\StockModel;
+use App\Models\TicketModel;
 use App\Libraries\UUID;
 use App\Models\InterventionModel;
 
 class InterventionsController extends BaseController
 {
-<<<<<<< Updated upstream
-    public function addIntervention($ticketId) {
-        // falta passar-li els professor i alumnes filtrats per instituts o classe ??
-        session()->setFlashdata('idTicket',$ticketId);
-        $instanceIT = new InterventionTypeModel();
-=======
     public function addIntervention($ticketId)
     {
         $instanceIT = new InterventionTypeModel();
@@ -23,38 +19,14 @@ class InterventionsController extends BaseController
         // falta passar-li els professor i alumnes filtrats per instituts o classe ??
         session()->setFlashdata('idTicket', $ticketId);
 
->>>>>>> Stashed changes
         $data = [
+            'stock' => $items,
             'interTypes' => $instanceIT->getAllInterTypes(),
-            'title' => lang('ticketsLang.titleG'),
         ];
 
         return view('Project/Interventions/addIntervention', $data);
     }
 
-<<<<<<< Updated upstream
-    public function addIntervention_post() {
-        $instanceI = new InterventionModel();
-        $uuid = new UUID();
-        //validation important
-        //data
-        $data = [
-            'intervention_id' => $uuid::v4(),
-            'ticket_id' => session()->getFlashdata("idTicket"),
-            'professor_id' => $this->request->getPost('professor'),
-            'student_id' => $this->request->getPost('student'),
-            'intervention_type_id' => $this->request->getPost('interventionType'),
-            'description' => $this->request->getPost('description'),
-            'student_course' => $this->request->getPost('cicle'),
-            'student_studies' => $this->request->getPost('course'),
-        ];
-        $instanceI->insert($data);
-    }
-
-    //falta
-    public function updateIntervention($ticket) {
-        session()->setFlashdata('idTicket',$ticket);
-=======
     public function addIntervention_post()
     {
         $validationRules = [
@@ -93,9 +65,9 @@ class InterventionsController extends BaseController
             //check user 
             $idProfessor = null;
             $idStudent = null;
-            if (session()->get('role') == "Professor" || session()->get('role') == "Center") {
+            if (session()->get('role') == "Professor") {
                 $idProfessor = session()->get('id');
-            } else {
+            } else if (session()->get('role') == "Student") {
                 $idStudent = session()->get('id');
             }
             //data
@@ -146,33 +118,23 @@ class InterventionsController extends BaseController
                 return redirect()->back()->withInput();
             }
         }
-        $block = false;
-        $stockNull = false;
+        $stockNull = true;
         if ($stock != null) {
-            if ($stock['intervention_id'] == null) {
-                $block = true;
+            if ($stock['intervention_id'] == $idInter) {
+                $stockNull = false;
             }
-        } else {
-            $stockNull = true;
         }
->>>>>>> Stashed changes
         $data = [
-            'title' => lang('ticketsLang.titleG'),
+            'device' => $instanceIT->getAllInterTypes(),
+            'inter' => $inter,
+            'stock' => $items,
+            'stockInter' => $stock,
+            'noStock' => $stockNull,
         ];
         return view('Project/interventions/updateIntervention', $data);
     }
 
 
-<<<<<<< Updated upstream
-    //falta
-    public function updateIntervention_post() {
-
-    }
-
-    //falta
-    public function delIntervention($ticket) {
-       
-=======
     public function updateIntervention_post($idInter)
     {
         $validationRules = [
@@ -204,10 +166,6 @@ class InterventionsController extends BaseController
         if ($this->validate($validationRules)) {
             $instanceI = new InterventionModel();
             $instanceST = new StockModel();
-            $instanceT = new TicketModel();
-            $uuid = new UUID();
-            //validation important
-            //check user 
             $idProfessor = null;
             $idStudent = null;
             if (session()->get('role') == "Professor" || session()->get('role') == "Center") {
@@ -251,6 +209,5 @@ class InterventionsController extends BaseController
         $instanceI->deleteIntervention($id);
         session()->setFlashdata('success', lang('ticketsLang.successDelete'));
         return redirect()->back()->withInput();
->>>>>>> Stashed changes
     }
 }

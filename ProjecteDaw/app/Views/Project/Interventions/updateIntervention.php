@@ -1,78 +1,33 @@
+<?php
+$this->extend('layouts/mainLayout');
+echo $this->section("main_content");
+?>
 
-<<<<<<< Updated upstream
-<?= $this->section("main_content");?>
-
-<div class="container-fluid p-0">
-    <div class="row">
-        <div class="col-12">
-            <div class="d-flex align-items-center bg-dark">
-                <img src="<?= base_url('Logo.png') ?>" alt="Logo" style="max-width: 80px">
-                <div>
-                    <h1 class="text-white text-center"><?= $title ?></h1>
-                </div>
-            </div>
-=======
+<div class="container-fluid mt-3">
+    <div id="centres" class="border">
         <div>
             <h3 class="titleForm mt-0"><?= lang('ticketsLang.update_intervention') ?></h3>
->>>>>>> Stashed changes
         </div>
-        <?= $this->include("layouts/mainLayout") ?>
-        <div id="centres" class="col-10">
-            <form action="<?php base_url("/addTickets") ?>" method="POST">
-                <?= csrf_field() ?>
-                <div class="form-group">
-                    <label for="person_contact_center" class=""><?= lang('ticketsLang.center_contact')?>:</label>
-                    <input type="text" class="form-control" name="person_contact_center" id="person_contact_center">
+        <form action="<?php base_url("/updateIntervention") ?>" method="POST">
+            <?= csrf_field() ?>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="description"><?= lang('ticketsLang.description') ?></label>
+                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"><?= $inter['description'] ?></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="email_person_contact"><?= lang('ticketsLang.center_contact_email')?>:</label>
-                    <input type="text" class="form-control" name="email_person_contact" id="email_person_contact">
-                </div>
-                <div class="form-group">
-                    <label for="description"><?= lang('ticketsLang.description')?></label>
-                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="device"><?= lang('ticketsLang.device')?></label>
-                    <select class="form-control" name="device" id="device">
+                <div class="form-group col-6">
+                    <label for="interventionType"><?= lang('ticketsLang.interType') ?></label>
+                    <select class="form-control" name="interventionType" id="interventionType">
                         <?php
                         $valueN = 1;
                         foreach ($device as $value) {
-                            echo "<option value='". $valueN. "'>". $value ."</option>";
+                            echo "<option value='" . $valueN . "'>" . $value . "</option>";
                             $valueN++;
-<<<<<<< Updated upstream
-                        }  
-                        ?>
-                    </select>
-                </div>
-                <div>
-                    <label for="status">Status</label>
-                    <select class="form-control" name="status" id="status">
-                        <?php
-                        $valueN = 1;
-                        foreach ($status as $value) {
-                            echo "<option value='". $valueN . "'>". $value ."</option>";
-                            $valueN++;
-                        }  
-                        ?>
-                    </select>
-                    </select>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary"><?= lang('ticketsLang.save')?></button>
-                    <a href="<?= base_url("/viewTickets") ?>" class="btn btn-secondary"><?= lang('ticketsLang.cancel')?></a>
-                </div>
-            </form>
-        </div>
-=======
                         }
                         ?>
                     </select>
                 </div>
-                <div class="form-group col-6 my-3 ">
-                    <label for="description"><?= lang('ticketsLang.description') ?></label>
-                    <textarea class="form-control" name="description" id="description" cols="30" rows="3"><?= $inter['description'] ?></textarea>
-                </div>
+
                 <div class="form-group col-6 my-4 ">
                     <label for="cicle"><?= lang('ticketsLang.FP') ?></label>
                     <select class="form-control" name="cicle" id="cicle">
@@ -91,7 +46,6 @@
                         ?>
                     </select>
                 </div>
-                <!--language-->
                 <div class="col-12 my-3">
                     <label for="stock"><?= lang('ticketsLang.stock') ?></label>
                     <select name="stock" id="stock">
@@ -121,8 +75,21 @@
                 </div>
             </div>
         </form>
->>>>>>> Stashed changes
     </div>
 </div>
-</div>
+<script>
+    $(document).ready(function() {
+        // s'inicialitza els select amb selectize
+        $('select').selectize({
+            sortField: 'text'
+        });
+        var inter = <?php echo json_encode($inter); ?>;
+        const interType = $('#interventionType')[0].selectize;
+        const course = $('#course')[0].selectize;
+        const cicle = $('#cicle')[0].selectize;
+        interType.setValue(inter['intervention_type_id'])
+        cicle.setValue(inter['student_studies']);
+        course.setValue(inter['student_course']);
+    });
+</script>
 <?php echo $this->endSection(); ?>

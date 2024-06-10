@@ -144,6 +144,7 @@ class SessionController extends BaseController
                             $professorTrue = true;
                         } else {
                             $prof = $instanceProfessor->obtainProfessor($data['mail']);
+                            session()->set('id', $prof['professor_id']);
                             session()->set('idCenter', $prof['repair_center_id']);
                         }
                     }
@@ -171,11 +172,7 @@ class SessionController extends BaseController
                     $login_button = '<a href="' . $client->createAuthUrl() . '" class="btn w-100 position-relative" 
                     style="  border: 2px solid blue; background-color: white;">
                     <img src="' . base_url("images/google.jpg") . '" style=" left: 8px; width: 22px; height: 22px;">
-<<<<<<< Updated upstream
-                    LOGIN WITH GOOGLE</a>';
-=======
                     '. lang("LoginLang.googleLogin").'</a>';
->>>>>>> Stashed changes
                     $data['login_button'] = $login_button;
                     return view("authentication/login/login", $data);
                 }
@@ -213,57 +210,6 @@ class SessionController extends BaseController
         $instanceProfessor->update(session()->getFlashdata('id'), $data);
         return redirect()->to('/viewTickets');
     }
-<<<<<<< Updated upstream
-
-    //register de alumnes 
-    public function validateStudents()
-    {
-        $crud = new KpaCrud();
-        $crud->setTable('students');
-        $crud->setPrimaryKey('student_id');
-        $crud->setColumns(['email']);
-        $crud->setColumnsInfo([
-            'email' => [
-                'name' => 'email',
-            ],
-        ]);
-        $crud->setConfig('ssttView');
-        $data['output'] = $crud->render();
-        return view('authentication/register/validateStudents', $data);
-    }
-
-    public function validateStudents_post()
-    {
-        $validationRules = [
-            'mail' => [
-                'label' => 'eMail usuari',
-                'rules' => 'required|valid_email',
-                'errors' => [
-                    'required' => 'eMail es un camp obligatori',
-                    'valid_email' => 'No és un mail valid',
-                ],
-            ],
-        ];
-
-        if ($this->validate($validationRules)) {
-            $instanceSt = new StudentModel();
-            $data = [
-                'student_id' => UUID::v4(),
-                'email' => $this->request->getPost('mail'),
-                'student_center_id' => session()->idCenter,
-                'language' => 'ca'
-            ];
-            $instanceSt->insert($data);
-            return redirect()->to(base_url('validateStudents'));
-        } else {
-            session()->setFlashdata('error', 'Failed');
-            return redirect()->back()->withInput();
-        }
-    }
-
-=======
-    
->>>>>>> Stashed changes
     // link -> al fer click cridar funcio per deslogejar
     public function logout()
     {

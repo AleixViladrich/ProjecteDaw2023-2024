@@ -29,11 +29,6 @@ class TicketsController extends BaseController
         helper('lang');
         $instanceS = new StatusModel();
         $instanceC = new CenterModel();
-        // variables per obtenir els selects
-        //type device
-        // d(session()->get('role'));
-        //center codes
-        $centerId = $instanceC->getAllCentersId();
         //status
         $status = $instanceS->getAllStatus();
         $statusNum = [];
@@ -50,122 +45,6 @@ class TicketsController extends BaseController
         $crud->setPrimaryKey('ticket_id');
         $crud->setRelation('status_id', 'status', 'status_id', 'status');
         $crud->setRelation('device_type_id', 'deviceType', 'device_type_id', 'device_type');
-<<<<<<< Updated upstream
-        //$crud->setRelation('email_person_center_g', 'professors', 'email', 'email');
-        //$crud->setRelation('name_person_center_g', 'professors2', 'name', 'name');
-        $crud->setRelation('g_center_code', 'centers', 'center_id', 'name');
-        if (session()->get('role') != 'Professor') {
-            $crud->setRelation('r_center_code', 'centers2', 'center_id', 'name');
-            $crud->setColumns(['ticket_id', 'deviceType__device_type', 'fault_description', 'centers__name', 'centers2__name', 'created_at', 'status__status']);
-            $crud->setColumnsInfo([
-                'ticket_id' => [
-                    'name' => lang('ticketsLang.ID'),
-                    'type' => KpaCrud::READONLY_FIELD_TYPE,
-                    'default' => UUID::v4(),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'deviceType__device_type' => [
-                    'name' => lang('ticketsLang.DeviceType')
-                ],
-                'fault_description' => [
-                    'name' => lang('ticketsLang.Description')
-                ],
-                'centers__name' => [
-                    'name' => lang('ticketsLang.EmitterCenter'),
-                ],
-                'centers2__name' => [
-                    'name' => lang('ticketsLang.RepairCenter'),
-                ],
-                'email_person_center_g' => [
-                    'name' => lang('ticketsLang.GeneratorMail'),
-                ],
-                'name_person_center_g' => [
-                    'name' => lang('ticketsLang.GeneratorName'),
-                ],
-                'created_at' => [
-                    'name' => lang('ticketsLang.CreatedAt'),
-                    'default' => date('Y-m-d h:m:s'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                    // 'type' => KpaCrud::DATETIME_FIELD_TYPE,
-                    // 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
-                ],
-                'updated_at' => [
-                    'name' => lang('ticketsLang.UpdatedAt'),
-                    'default' => date('Y-m-d h:m:s'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'deleted_at' => [
-                    'name' => lang('ticketsLang.UpdatedAt'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'status__status' => [
-                    'name' => 'Estat',
-                ]
-            ]);
-        } else {
-            $crud->setColumns(['ticket_id', 'deviceType__device_type', 'fault_description', 'centers__name', 'created_at', 'status__status']);
-            $crud->setColumnsInfo([
-                'ticket_id' => [
-                    'name' => lang('ticketsLang.ID'),
-                    'type' => KpaCrud::READONLY_FIELD_TYPE,
-                    'default' => UUID::v4(),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'deviceType__device_type' => [
-                    'name' => lang('ticketsLang.DeviceType')
-                ],
-                'fault_description' => [
-                    'name' => lang('ticketsLang.Description')
-                ],
-                'centers__name' => [
-                    'name' => lang('ticketsLang.EmitterCenter'),
-                ],
-                'email_person_center_g' => [
-                    'name' => lang('ticketsLang.GeneratorMail'),
-                ],
-                'name_person_center_g' => [
-                    'name' => lang('ticketsLang.GeneratorName'),
-                ],
-                'created_at' => [
-                    'name' => lang('ticketsLang.CreatedAt'),
-                    'default' => date('Y-m-d h:m:s'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                    // 'type' => KpaCrud::DATETIME_FIELD_TYPE,
-                    // 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
-                ],
-                'updated_at' => [
-                    'name' => lang('ticketsLang.UpdatedAt'),
-                    'default' => date('Y-m-d h:m:s'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'deleted_at' => [
-                    'name' => lang('ticketsLang.UpdatedAt'),
-                    'html_atts' => [
-                        'disabled'
-                    ]
-                ],
-                'status__status' => [
-                    'name' => 'Estat',
-                ]
-            ]);
-        }
-        $crud->addWhere("deleted_at", null, false);
-        $crud->setConfig('ssttView');        //sessions links
-=======
         //$crud->setRelation('g_center_code', 'centers', 'center_id', 'name');
         //$crud->setRelation('r_center_code', 'centers2', 'center_id', 'name');
         $crud->setColumns(['ticket_id', 'deviceType__device_type', 'fault_description', 'gCenter', 'rCenter', 'created_at', 'status__status']);
@@ -223,35 +102,26 @@ class TicketsController extends BaseController
             ]
         ]);
         $crud->setConfig('ssttView');
->>>>>>> Stashed changes
         $crud->addItemLink('view', 'fa-solid fa-eye', base_url('/interventionsOfTicket'), 'Intervencions');
         $data['add'] = true;
         $role = session()->get('role');
-        if ($role == 'Admin' || $role == 'SSTT' || $role == 'Center') {
-            $crud->addItemLink('delTicket', 'fa fa-trash-o', base_url('/confirmDel'), 'Eliminar ticket');
-            // $crud->addItemLink('delTicket', 'fa fa-trash-o', base_url('/confirmDel'), 'Eliminar ticket');
-            if ($role != 'Center') {
+        if ($role == 'Admin' || $role == 'SSTT' || $role == 'Center' || $role == "Professor") {
+            $crud->addItemLink('updateTicket', 'fa-solid fa-pen', base_url('/updateTicket'), 'Actualitzar tiquet');
+            $crud->addItemLink('delTicket', 'fa fa-trash-o', base_url('/delTicket'), 'Eliminar ticket');
+            if ($role == 'SSTT') {
                 $crud->addItemLink('assign', 'fa-solid fa-school', base_url('/assignTicket'), 'Assignar');
             }
         } else {
             if ($role == 'Student') {
-                $crud->setConfig(['editable' => false]);
                 $data['add'] = false;
-                $crud->addWhere("r_center_code", session()->idCenter);
+                $center = $instanceC->putEmailOfCenter(session()->get('idCenter'));
+                $crud->addWhere("rCenter='" . $center['name'] . "' OR gCenter='" . $center['name'] . "'");
             }
         }
         if ($role == 'Student' || $role == 'Professor' || $role == 'Center') {
-<<<<<<< Updated upstream
-            $crud->addWhere("r_center_code", session()->idCenter);
-        }
-        $crud->addWhere('deleted_at');
-        // document.querySelector("#item-1 > td:nth-child(4) > a:nth-child(3)") meter text-danger y borrar text-primary
-=======
             $center = $instanceC->putEmailOfCenter(session()->get('idCenter'));
-            $crud->addWhere('rCenter', $center['name']);
+            $crud->addWhere("rCenter='" . $center['name'] . "' OR gCenter='" . $center['name'] . "'");
         }
-
->>>>>>> Stashed changes
         $data['output'] = $crud->render();
         return view('Project/Tickets/viewTickets', $data);
     }
@@ -301,34 +171,18 @@ class TicketsController extends BaseController
             // si ets SSTT el g_center_code es obligatori
             // name email gCenter es sessio si ets professor
             //SSTT sessions !!
-<<<<<<< Updated upstream
-            if (session()->get('role') == 'SSTT') {
-=======
             if (session()->get('role') == "SSTT") {
->>>>>>> Stashed changes
                 $centerG =  $this->request->getPost('center_g');
                 if ($centerG == "") {
                     $centerG = null;
                 }
                 $centerR =  $this->request->getPost('center_r');
-<<<<<<< Updated upstream
-            } else {
-                $centerG = session()->get('idCenter'); //sessio (flash)
-                $centerR = null;
-            }
-            d($centerG);
-            d($centerR);
-            if ($centerG == '') {
-                $centerG = null;
-            }
-            if ($centerR == '') {
-=======
                 if ($centerR == "") {
                     $centerR = null;
                 }
-            } else if (session()->get('role') == "Professor"  || session()->get('role') == "Center") {
+            }
+            if (session()->get('role') == "Professor"  || session()->get('role') == "Center") {
                 $centerG = session()->get('idCenter');
->>>>>>> Stashed changes
                 $centerR = null;
             }
             $data = [
@@ -339,7 +193,6 @@ class TicketsController extends BaseController
                 'r_center_code' => $centerR,
                 'email_person_center_g' => $this->request->getPost('email'),
                 'name_person_center_g' => $this->request->getPost('name'),
-                // status estandard
                 'status_id' => '1',
             ];
             $instanceT->insert($data);
@@ -378,11 +231,8 @@ class TicketsController extends BaseController
     }
 
     //updateTicket
-    public function updateTicket()
+    public function updateTicket($id)
     {
-<<<<<<< Updated upstream
-        return redirect()->to(base_url('assign'));
-=======
         $instanceT = new TicketModel();
         $instanceS = new StatusModel();
         $instanceC = new CenterModel();
@@ -434,73 +284,36 @@ class TicketsController extends BaseController
             'alert' => $alert,
         ];
         return view('Project/Tickets/updateTickets', $data);
->>>>>>> Stashed changes
     }
 
 
-    public function confirmDelete($id)
+    public function updateTicket_post($id)
     {
-<<<<<<< Updated upstream
-        $data = [
-            'id' => $id,
-        ];
-
-        return view('/Project/confirm', $data);
-=======
         $statusChange = session()->getFlashdata('statusChange');
-        if (session()->get('role') == "SSTT" || session()->get('role') == "Admin") {
-            if ($statusChange == false) {
-                $validationRules = [
-                    'device' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
+        if ($statusChange == false) {
+            $validationRules = [
+                'device' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
                     ],
-                ];
-            } else {
-                $validationRules = [
-                    'device' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
+                ],
+            ];
+        } else {
+            $validationRules = [
+                'device' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
                     ],
-                    'status' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
+                ],
+                'status' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'camp requerit',
                     ],
-                ];
-            }
-        }
-        if (session()->get('role') == "Professor" || session()->get('role') == "Center") {
-            if ($statusChange == false) {
-                $validationRules = [
-                    'device' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
-                    ],
-                ];
-            } else {
-                $validationRules = [
-                    'device' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
-                    ],
-                    'status' => [
-                        'rules' => 'required',
-                        'errors' => [
-                            'required' => 'camp requerit',
-                        ],
-                    ],
-                ];
-            }
+                ],
+            ];
         }
         //validation
         if ($this->validate($validationRules)) {
@@ -528,7 +341,6 @@ class TicketsController extends BaseController
             return redirect()->back()->withInput();
         }
         return redirect()->back()->withInput();
->>>>>>> Stashed changes
     }
 
 
@@ -536,27 +348,9 @@ class TicketsController extends BaseController
     public function deleteTicket($ticket)
     {
 
-        // dd($ticket);
-        // fet i validat 
         $instanceI = new InterventionModel();
-
-        $Interventions = $instanceI->getSpecificInterventions($ticket);
-<<<<<<< Updated upstream
-
-        if ($Interventions != null) {
-            session()->setFlashdata('error', 'no es pot borrar el ticket');
-            // return redirect()->back();
-            return redirect()->to('viewTickets');
-        }
         $instanceT = new TicketModel();
-        $instanceT->deleteTicket($ticket);
-
-        // dd($arr);
-        // dd($interventionModel->getSpecificInterventions($ticket));
-
-        // return redirect()->back()->withInput();
-        return redirect()->to('viewTickets');
-=======
+        $Interventions = $instanceI->getSpecificInterventions($ticket);
         $ticketTrue = $instanceT->retrieveSpecificData($ticket);
         if ($Interventions == null) {
             $instanceT->deleteTicket($ticket);
@@ -571,6 +365,5 @@ class TicketsController extends BaseController
         }
         session()->setFlashdata('error', lang('ticketsLang.errorDel'));
         return redirect()->back();
->>>>>>> Stashed changes
     }
 }
